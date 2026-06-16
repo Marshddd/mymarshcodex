@@ -1,5 +1,7 @@
 import { json, readDb, writeDb } from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const db = await readDb();
   return json(db.quizzes);
@@ -21,4 +23,3 @@ export async function POST(request) {
   await writeDb(db);
   return json(quiz, { status: 201 });
 }
-

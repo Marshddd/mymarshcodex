@@ -1,8 +1,17 @@
-import Nav from '@/components/Nav';
-import { readDb } from '@/lib/db';
+'use client';
 
-export default async function QuizPage() {
-  const db = await readDb();
+import { useEffect, useState } from 'react';
+import Nav from '@/components/Nav';
+
+export default function QuizPage() {
+  const [quizzes, setQuizzes] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/quizzes')
+      .then((response) => response.json())
+      .then(setQuizzes)
+      .catch(() => setQuizzes([]));
+  }, []);
 
   return (
     <main className="shell">
@@ -10,7 +19,7 @@ export default async function QuizPage() {
       <section className="section">
         <h2>แบบทดสอบ</h2>
         <div className="grid">
-          {db.quizzes.map((quiz) => (
+          {quizzes.map((quiz) => (
             <article className="card" key={quiz.id}>
               <p className="btn secondary">{quiz.type === 'pre' ? 'ก่อนเรียน' : 'หลังเรียน'}</p>
               <h2>{quiz.title}</h2>

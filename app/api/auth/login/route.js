@@ -1,5 +1,7 @@
 import { json, readDb } from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request) {
   const { username, password } = await request.json();
   const db = await readDb();
@@ -18,4 +20,3 @@ export async function POST(request) {
     }
   });
 }
-

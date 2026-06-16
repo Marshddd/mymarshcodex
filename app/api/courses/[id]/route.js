@@ -1,5 +1,7 @@
 import { json, readDb, writeDb } from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(_request, { params }) {
   const { id } = await params;
   const db = await readDb();
@@ -30,4 +32,3 @@ export async function DELETE(_request, { params }) {
   await writeDb(db);
   return json({ ok: true });
 }
-
