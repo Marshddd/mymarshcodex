@@ -16,7 +16,9 @@ export async function POST(request) {
       id: user.id,
       username: user.username,
       name: user.name,
-      role: user.role
+      role: user.role,
+      progress: user.progress || {},
+      quizResults: user.quizResults || {}
     }
   });
 }

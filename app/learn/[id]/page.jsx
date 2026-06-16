@@ -8,8 +8,12 @@ export default function CoursePage({ params }) {
   const { id } = use(params);
   const [course, setCourse] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [user, setUser] = useState(null);
+  const [progress, setProgress] = useState({});
 
   useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('bm_current_user') || 'null'));
+    setProgress(JSON.parse(localStorage.getItem('bm_progress') || '{}'));
     fetch(`/api/courses/${id}`)
       .then((response) => response.ok ? response.json() : null)
       .then((data) => {
@@ -18,6 +22,28 @@ export default function CoursePage({ params }) {
       })
       .catch(() => setLoaded(true));
   }, [id]);
+
+  function markLesson(lessonId) {
+    if (!user) {
+      window.location.href = '/login';
+      return;
+    }
+
+    const nextProgress = {
+      ...progress,
+      [user.id]: {
+        ...(progress[user.id] || {}),
+        [lessonId]: true
+      }
+    };
+    localStorage.setItem('bm_progress', JSON.stringify(nextProgress));
+    setProgress(nextProgress);
+    fetch(`/api/users/${user.id}/progress`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lessonId, completed: true })
+    }).catch(() => {});
+  }
 
   if (loaded && !course) {
     return (
@@ -54,6 +80,9 @@ export default function CoursePage({ params }) {
                 <article className="card" key={lesson.id}>
                   <h3>{lesson.title}</h3>
                   <p className="muted">{lesson.content}</p>
+                  <button className="btn secondary" type="button" onClick={() => markLesson(lesson.id)}>
+                    {progress[user?.id]?.[lesson.id] ? 'เรียนแล้ว' : 'บันทึกว่าเรียนแล้ว'}
+                  </button>
                 </article>
               ))}
             </div>

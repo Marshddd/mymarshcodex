@@ -164,7 +164,7 @@ export default function AdminPage() {
       <Nav />
       <section className="section">
         <h2>Admin Fullstack</h2>
-        <p className="muted">จัดการข้อมูลผ่าน Next.js API Routes และบันทึกลงไฟล์ JSON</p>
+        <p className="muted">จัดการบทเรียน วิดีโอ และแบบทดสอบผ่าน Next.js API โดยออนไลน์จะบันทึกลง MongoDB และใช้ไฟล์ JSON เป็นสำรองตอนรันเครื่องตัวเอง</p>
         {loadError ? <p className="card" style={{ color: '#dc2626' }}>{loadError}</p> : null}
         {message ? <p className="btn secondary">{message}</p> : null}
 

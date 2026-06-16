@@ -10,6 +10,7 @@ export default function Nav() {
         <Link href="/">หน้าหลัก</Link>
         <Link href="/learn">บทเรียน</Link>
         <Link href="/quiz">แบบทดสอบ</Link>
+        <Link href="/profile">โปรไฟล์</Link>
         <Link href="/admin">Admin</Link>
       </div>
     </nav>

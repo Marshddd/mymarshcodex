@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
 
@@ -25,16 +26,7 @@ export default function QuizPage() {
               <h2>{quiz.title}</h2>
               <p className="muted">{quiz.desc}</p>
               <p className="muted">{quiz.questions.length} ข้อ</p>
-              {quiz.questions.map((question) => (
-                <div className="card" key={question.id} style={{ marginTop: 12 }}>
-                  <strong>{question.question}</strong>
-                  <ol>
-                    {question.options.map((option, index) => (
-                      <li key={option} className={index === question.correct ? 'gradient' : ''}>{option}</li>
-                    ))}
-                  </ol>
-                </div>
-              ))}
+              <Link className="btn" href={`/quiz/${quiz.id}`}>เริ่มทำแบบทดสอบ</Link>
             </article>
           ))}
         </div>
