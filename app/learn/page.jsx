@@ -1,0 +1,27 @@
+import Link from 'next/link';
+import Nav from '@/components/Nav';
+import { readDb } from '@/lib/db';
+
+export default async function LearnPage() {
+  const db = await readDb();
+
+  return (
+    <main className="shell">
+      <Nav />
+      <section className="section">
+        <h2>บทเรียน</h2>
+        <div className="grid">
+          {db.courses.map((course) => (
+            <Link className="card" href={`/learn/${course.id}`} key={course.id}>
+              <h3>{course.icon} {course.unit}</h3>
+              <h2>{course.title}</h2>
+              <p className="muted">{course.desc}</p>
+              <p className="muted">{course.lessons.length} บทเรียนย่อย</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
+

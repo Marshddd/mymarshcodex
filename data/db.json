@@ -1,0 +1,120 @@
+{
+  "users": [
+    {
+      "id": "admin-001",
+      "username": "admin",
+      "password": "admin1234",
+      "name": "ผู้ดูแลระบบ",
+      "role": "admin"
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "unit": "หน่วยที่ 1",
+      "title": "พื้นฐาน Back-End",
+      "desc": "เข้าใจ Client, Server, HTTP และ REST API",
+      "icon": "🖥️",
+      "videoUrl": "",
+      "lessons": [
+        {
+          "id": "l1-1",
+          "title": "Back-End คืออะไร",
+          "content": "Back-End คือระบบเบื้องหลังที่รับ request ประมวลผล ติดต่อ database และส่ง response กลับไปให้ผู้ใช้"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "unit": "หน่วยที่ 2",
+      "title": "Node.js และ Express",
+      "desc": "สร้าง Web Server และ REST API ด้วย JavaScript",
+      "icon": "⚡",
+      "videoUrl": "",
+      "lessons": [
+        {
+          "id": "l2-1",
+          "title": "สร้าง Server แรก",
+          "content": "ใช้ Node.js และ Express เพื่อสร้าง API endpoint และ middleware"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "unit": "หน่วยที่ 3",
+      "title": "MongoDB",
+      "desc": "จัดการข้อมูลแบบ Document และ CRUD",
+      "icon": "🍃",
+      "videoUrl": "",
+      "lessons": [
+        {
+          "id": "l3-1",
+          "title": "รู้จัก MongoDB",
+          "content": "MongoDB เป็น NoSQL database ที่เก็บข้อมูลเป็น document คล้าย JSON"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "unit": "หน่วยที่ 4",
+      "title": "Authentication และ JWT",
+      "desc": "สร้างระบบสมัครสมาชิก เข้าสู่ระบบ และจัดการสิทธิ์",
+      "icon": "🔐",
+      "videoUrl": "",
+      "lessons": [
+        {
+          "id": "l4-1",
+          "title": "Login และ Token",
+          "content": "ใช้ bcrypt hash password และใช้ JWT เพื่อยืนยันตัวตนหลังเข้าสู่ระบบ"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "unit": "หน่วยที่ 5",
+      "title": "Docker",
+      "desc": "แพ็กแอปเป็น Container เพื่อรันได้ทุกที่",
+      "icon": "🐳",
+      "videoUrl": "",
+      "lessons": [
+        {
+          "id": "l5-1",
+          "title": "Dockerfile",
+          "content": "Dockerfile ใช้กำหนดขั้นตอนสร้าง image สำหรับรันแอป"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "unit": "หน่วยที่ 6",
+      "title": "Deploy และ CI/CD",
+      "desc": "นำแอปขึ้น Cloud และทำ Pipeline อัตโนมัติ",
+      "icon": "☁️",
+      "videoUrl": "",
+      "lessons": [
+        {
+          "id": "l6-1",
+          "title": "Deploy Production",
+          "content": "ใช้ Docker, environment variables และ CI/CD เพื่อ deploy แอปอย่างเป็นระบบ"
+        }
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "q1-pre",
+      "courseId": 1,
+      "type": "pre",
+      "title": "แบบทดสอบก่อนเรียน หน่วยที่ 1",
+      "desc": "ทดสอบความรู้พื้นฐานก่อนเรียน",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Back-End ทำงานอยู่ฝั่งใด",
+          "options": ["Client", "Server", "CSS", "Browser UI"],
+          "correct": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    container_name: backend-mastery-next
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATA_FILE=/app/data/db.json
+      - MONGODB_URI=${MONGODB_URI:-}
+      - MONGODB_DB=${MONGODB_DB:-backend_mastery}
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
