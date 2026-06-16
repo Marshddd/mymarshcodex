@@ -19,34 +19,29 @@ export default function HomePage() {
       <Nav />
       <section className="hero">
         <div>
-          <p className="btn secondary">🚀 เนื้อหาครบ 6 หน่วย + แบบทดสอบ</p>
+          <p className="btn secondary">🚀 Fullstack Next.js + Docker</p>
           <h1>
-            ก้าวสู่ความเป็นเทพ
+            ก้าวสู่ Back-End
             <br />
-            <span className="gradient">Back-End</span>
+            <span className="gradient">Developer</span>
           </h1>
           <p className="lead">
-            ศึกษาการพัฒนาระบบแบบมืออาชีพตั้งแต่พื้นฐาน Server, Database, API ไปจนถึง Docker, AWS และ CI/CD Pipeline
+            แพลตฟอร์มเรียน Back-End แบบ Fullstack มีหน้าเรียน แบบทดสอบ Admin CRUD และ API backend ใน Next.js
           </p>
           <div className="actions">
-            <Link className="btn" href="/learn">เริ่มต้นเรียนฟรี</Link>
-            <Link className="btn secondary" href="/learn">ดูบทเรียนทั้งหมด</Link>
+            <Link className="btn" href="/learn">เริ่มเรียน</Link>
+            <Link className="btn secondary" href="/admin">ไปหน้า Admin</Link>
           </div>
         </div>
         <div className="card code-card">
-          <pre>{`const express = require('express');
-const app = express();
-
-app.get('/', (req, res) => {
-  res.json({
-    message: 'สวัสดี backend!'
-  });
-});
-
-app.listen(3000, () => {
-  console.log('🚀 Server running!');
+          <pre>{`// app/api/courses/route.js
+export async function GET() {
+  const db = await readDb();
+  return Response.json(db.courses);
 }
-`}</pre>
+
+// Docker
+docker compose up --build`}</pre>
         </div>
       </section>
 
