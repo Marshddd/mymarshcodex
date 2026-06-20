@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend Mastery — เส้นทางสู่ Back-End Developer มืออาชีพ</title>
+  <meta name="description" content="เรียนรู้การพัฒนา Back-End ตั้งแต่พื้นฐานจนถึงขั้นสูง ครอบคลุม Node.js, MongoDB, Docker, AWS พร้อมแบบทดสอบครบทุกหน่วย" />
+  <meta name="theme-color" content="#080b12" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo" onclick="navigate('home')">
+          <span class="logo-icon">⬡</span>
+          <span class="logo-text">Backend <span class="logo-accent">Mastery</span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+          <a href="#" onclick="navigate('home')" class="nav-link" id="nav-home">หน้าหลัก</a>
+          <a href="#" onclick="navigate('courses')" class="nav-link" id="nav-courses">บทเรียน</a>
+          <a href="#" onclick="navigate('quiz-list')" class="nav-link" id="nav-quiz">แบบทดสอบ</a>
+          <a href="#" onclick="navigate('about')" class="nav-link" id="nav-about">เกี่ยวกับ</a>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+          <button class="btn-ghost" onclick="navigate('login')">เข้าสู่ระบบ</button>
+          <button class="btn-primary" onclick="navigate('register')">สมัครสมาชิก</button>
+        </div>
+        <div class="nav-user hidden" id="nav-user">
+          <div class="user-avatar" id="nav-avatar" onclick="toggleUserMenu()">MA</div>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="dropdown-header" id="dropdown-name">ชื่อผู้ใช้</div>
+            <hr class="dropdown-divider" />
+            <a href="#" onclick="navigate('profile')" class="dropdown-item">👤 โปรไฟล์</a>
+            <a href="#" onclick="navigate('my-courses')" class="dropdown-item">📚 บทเรียนของฉัน</a>
+            <a href="#" onclick="navigate('admin')" class="dropdown-item hidden" id="admin-link">⚙️ ผู้ดูแลระบบ</a>
+            <hr class="dropdown-divider" />
+            <a href="#" onclick="logout()" class="dropdown-item danger">🚪 ออกจากระบบ</a>
+          </div>
+        </div>
+        <!-- Mobile menu button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="เปิดหรือปิดเมนู">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Pages -->
+    <main id="main">
+
+      <!-- HOME PAGE -->
+      <div id="page-home" class="page active">
+        <section class="hero">
+          <div class="hero-bg"></div>
+          <div class="hero-particles" id="particles"></div>
+          <div class="hero-content">
+            <div class="hero-badge">🚀 เนื้อหาครบ 6 หน่วย + แบบทดสอบ</div>
+            <h1 class="hero-title">
+              ก้าวสู่ความเป็นเทพ<br>
+              <span class="gradient-text" id="typing-target">Back-End</span>
+            </h1>
+            <p class="hero-desc">
+              ศึกษาการพัฒนาระบบแบบมืออาชีพตั้งแต่พื้นฐาน Server, Database, API ไปจนถึง Docker, AWS และ CI/CD Pipeline
+            </p>
+            <div class="hero-actions">
+              <button class="btn-primary btn-lg" onclick="startLearning()">เริ่มต้นเรียนฟรี</button>
+              <button class="btn-outline btn-lg" onclick="navigate('courses')">ดูบทเรียนทั้งหมด</button>
+            </div>
+            <div class="hero-tech">
+              <span class="tech-badge">Node.js</span>
+              <span class="tech-badge">MongoDB</span>
+              <span class="tech-badge">JWT</span>
+              <span class="tech-badge">Docker</span>
+              <span class="tech-badge">AWS</span>
+              <span class="tech-badge">CI/CD</span>
+            </div>
+          </div>
+          <div class="hero-code">
+            <div class="code-window">
+              <div class="code-titlebar">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="code-filename">server.js</span>
+              </div>
+              <pre class="code-body"><code><span class="c-blue">const</span> <span class="c-green">express</span> = require(<span class="c-yellow">'express'</span>);
+<span class="c-blue">const</span> <span class="c-green">app</span> = express();
+
+app.<span class="c-purple">get</span>(<span class="c-yellow">'/'</span>, (req, res) => {
+  res.<span class="c-purple">json</span>({
+    message: <span class="c-yellow">'สวัสดี backend!'</span>
+  });
+});
+
+app.<span class="c-purple">listen</span>(3000, () => {
+  console.<span class="c-purple">log</span>(<span class="c-yellow">'🚀 Server running!'</span>);
+});</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="features">
+          <div class="container">
+            <h2 class="section-title">ทำไมต้องเรียนที่นี่?</h2>
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>เนื้อหาครบ 6 หน่วย</h3>
+                <p>ครอบคลุมตั้งแต่พื้นฐานจนถึง Cloud Deployment เหมาะกับทุกระดับ</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>แบบทดสอบก่อน-หลังเรียน</h3>
+                <p>วัดความรู้ก่อนเรียนและทบทวนหลังจบบทเรียนทุกหน่วย</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>ตัวอย่างโค้ดจริง</h3>
+                <p>เรียนจากโค้ดตัวอย่างที่นำไปใช้ได้จริงในการทำงาน</p>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>ติดตามความก้าวหน้า</h3>
+                <p>ดูสถิติและความก้าวหน้าของตัวเองได้ตลอดเวลา</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Roadmap Section -->
+        <section class="roadmap">
+          <div class="container">
+            <h2 class="section-title">เส้นทางการเรียนรู้</h2>
+            <p class="section-subtitle">เรียนรู้ตามลำดับ 6 หน่วยเพื่อความเข้าใจสูงสุด</p>
+            <div class="roadmap-grid">
+              <div class="roadmap-item" onclick="navigate('courses')">
+                <div class="roadmap-num">01</div>
+                <div class="roadmap-icon">🖥️</div>
+                <h4>พื้นฐาน Back-End</h4>
+                <p>HTTP, REST API, Client-Server</p>
+              </div>
+              <div class="roadmap-connector">→</div>
+              <div class="roadmap-item" onclick="navigate('courses')">
+                <div class="roadmap-num">02</div>
+                <div class="roadmap-icon">⚡</div>
+                <h4>Node.js & Express</h4>
+                <p>Server, Routing, Middleware</p>
+              </div>
+              <div class="roadmap-connector">→</div>
+              <div class="roadmap-item" onclick="navigate('courses')">
+                <div class="roadmap-num">03</div>
+                <div class="roadmap-icon">🍃</div>
+                <h4>MongoDB</h4>
+                <p>CRUD, Schema, Relations</p>
+              </div>
+              <div class="roadmap-connector">→</div>
+              <div class="roadmap-item" onclick="navigate('courses')">
+                <div class="roadmap-num">04</div>
+                <div class="roadmap-icon">🔐</div>
+                <h4>Auth & JWT</h4>
+                <p>Login, Security, RBAC</p>
+              </div>
+              <div class="roadmap-connector">→</div>
+              <div class="roadmap-item" onclick="navigate('courses')">
+                <div class="roadmap-num">05</div>
+                <div class="roadmap-icon">🐳</div>
+                <h4>Docker</h4>
+                <p>Container, Compose</p>
+              </div>
+              <div class="roadmap-connector">→</div>
+              <div class="roadmap-item" onclick="navigate('courses')">
+                <div class="roadmap-num">06</div>
+                <div class="roadmap-icon">☁️</div>
+                <h4>AWS & CI/CD</h4>
+                <p>Deploy, Pipeline</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="testimonials">
+          <div class="container">
+            <h2 class="section-title">เสียงจากผู้เรียน</h2>
+            <div class="testimonials-grid">
+              <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"เนื้อหาเข้าใจง่ายมาก อธิบายได้ชัดเจน ตั้งแต่พื้นฐานจนถึง Docker ตอนนี้ใช้ Docker ในงานจริงแล้ว!"</p>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">ส</div>
+                  <div><strong>สมชาย ใจดี</strong><br><span>Junior Developer</span></div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"แบบทดสอบก่อน-หลังเรียนช่วยให้รู้ว่าตัวเองเข้าใจจริงหรือเปล่า ชอบระบบ tracking ความก้าวหน้ามาก"</p>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">น</div>
+                  <div><strong>นภาพร วิทยา</strong><br><span>Full-Stack Developer</span></div>
+                </div>
+              </div>
+              <div class="testimonial-card">
+                <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                <p class="testimonial-text">"เริ่มจากไม่รู้อะไรเลย ตอนนี้ deploy แอปขึ้น AWS ได้แล้ว ขอบคุณที่ทำเป็นภาษาไทย!"</p>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">อ</div>
+                  <div><strong>อภิชาติ รักเรียน</strong><br><span>นักศึกษา IT</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="courses-preview">
+          <div class="container">
+            <h2 class="section-title">บทเรียนแนะนำ</h2>
+            <div class="courses-grid" id="home-courses-grid"></div>
+            <div class="text-center mt-2">
+              <button class="btn-outline" onclick="navigate('courses')">ดูบทเรียนทั้งหมด 6 หน่วย →</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- COURSES PAGE -->
+      <div id="page-courses" class="page">
+        <div class="container py-4">
+          <h1 class="page-title">รายการบทเรียน</h1>
+          <p class="page-subtitle">ครอบคลุม 6 หน่วยการเรียนรู้ เลือกบทเรียนที่คุณสนใจ</p>
+          <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="course-search" placeholder="ค้นหาบทเรียน..." oninput="filterCourses()" />
+          </div>
+          <div class="courses-grid" id="courses-grid"></div>
+        </div>
+      </div>
+
+      <!-- LESSON PAGE -->
+      <div id="page-lesson" class="page">
+        <div class="lesson-layout">
+          <aside class="lesson-sidebar" id="lesson-sidebar"></aside>
+          <div class="lesson-content" id="lesson-content"></div>
+        </div>
+      </div>
+
+      <!-- QUIZ PAGE -->
+      <div id="page-quiz" class="page">
+        <div class="quiz-container" id="quiz-container"></div>
+      </div>
+
+      <!-- QUIZ LIST PAGE -->
+      <div id="page-quiz-list" class="page">
+        <div class="container py-4">
+          <h1 class="page-title">แบบทดสอบทั้งหมด</h1>
+          <p class="page-subtitle">ทดสอบความรู้ก่อนและหลังเรียนทุกหน่วย</p>
+          <div id="quiz-list-grid" class="courses-grid"></div>
+        </div>
+      </div>
+
+      <!-- CERTIFICATE PAGE -->
+      <div id="page-certificate" class="page">
+        <div class="certificate-container" id="certificate-container"></div>
+      </div>
+
+      <!-- QUIZ RESULT PAGE -->
+      <div id="page-quiz-result" class="page">
+        <div class="quiz-result-container" id="quiz-result-container"></div>
+      </div>
+
+      <!-- ABOUT PAGE -->
+      <div id="page-about" class="page">
+        <div class="about-hero">
+          <div class="container">
+            <h1 class="about-title">เกี่ยวกับ <span class="gradient-text">Backend Mastery</span></h1>
+            <p class="about-desc">แพลตฟอร์มเรียนรู้การพัฒนา Back-End ภาษาไทย สำหรับทุกระดับ</p>
+          </div>
+        </div>
+        <div class="container py-4">
+          <div class="about-grid">
+            <div class="about-card">
+              <div class="about-card-icon">🎯</div>
+              <h3>เป้าหมาย</h3>
+              <p>สร้างนักพัฒนา Back-End ที่มีคุณภาพ ด้วยเนื้อหาที่เข้าใจง่าย ครบถ้วน และทันสมัย เหมาะสำหรับผู้เริ่มต้นจนถึงระดับกลาง</p>
+            </div>
+            <div class="about-card">
+              <div class="about-card-icon">📚</div>
+              <h3>เนื้อหา</h3>
+              <p>ครอบคลุม 6 หน่วยการเรียนรู้ ตั้งแต่พื้นฐาน HTTP/REST, Node.js, MongoDB ไปจนถึง Docker, AWS และ CI/CD Pipeline</p>
+            </div>
+            <div class="about-card">
+              <div class="about-card-icon">🧪</div>
+              <h3>การวัดผล</h3>
+              <p>มีแบบทดสอบก่อนและหลังเรียนทุกหน่วย พร้อมเฉลยอย่างละเอียด เพื่อวัดความเข้าใจของผู้เรียน</p>
+            </div>
+            <div class="about-card">
+              <div class="about-card-icon">💡</div>
+              <h3>วิธีใช้งาน</h3>
+              <p>สมัครสมาชิกฟรี → เลือกบทเรียน → ทำแบบทดสอบก่อนเรียน → อ่านเนื้อหา → ทำแบบทดสอบหลังเรียน → ติดตามความก้าวหน้า</p>
+            </div>
+          </div>
+
+          <div class="about-tech-section">
+            <h2 class="section-title">เทคโนโลยีที่ครอบคลุม</h2>
+            <div class="tech-grid">
+              <div class="tech-item"><span>⚡</span> Node.js</div>
+              <div class="tech-item"><span>🚀</span> Express.js</div>
+              <div class="tech-item"><span>🍃</span> MongoDB</div>
+              <div class="tech-item"><span>🔐</span> JWT & bcrypt</div>
+              <div class="tech-item"><span>🐳</span> Docker</div>
+              <div class="tech-item"><span>🎼</span> Docker Compose</div>
+              <div class="tech-item"><span>☁️</span> AWS EC2 / S3</div>
+              <div class="tech-item"><span>🔄</span> CI/CD Pipeline</div>
+              <div class="tech-item"><span>🌐</span> REST API</div>
+              <div class="tech-item"><span>🛡️</span> Security</div>
+              <div class="tech-item"><span>📡</span> Nginx</div>
+              <div class="tech-item"><span>📦</span> PM2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGISTER PAGE -->
+      <div id="page-register" class="page">
+        <div class="auth-split register-split">
+          <div class="auth-panel register-panel">
+            <div class="auth-panel-content">
+              <div class="auth-panel-logo" onclick="navigate('home')">
+                <span class="logo-icon">⬡</span>
+                <span>Backend <span class="logo-accent">Mastery</span></span>
+              </div>
+              <h2 class="auth-panel-title">เริ่มต้นเส้นทาง<br><span class="gradient-text">Back-End Developer</span></h2>
+              <p class="auth-panel-desc">เรียนรู้ฟรี 6 หน่วย พร้อมแบบทดสอบและใบรับรอง</p>
+              <div class="auth-panel-features">
+                <div class="auth-feature">
+                  <span class="auth-feature-icon">📚</span>
+                  <div>
+                    <strong>6 หน่วยการเรียน</strong>
+                    <p>Node.js, MongoDB, JWT, Docker, AWS</p>
+                  </div>
+                </div>
+                <div class="auth-feature">
+                  <span class="auth-feature-icon">📝</span>
+                  <div>
+                    <strong>12 แบบทดสอบ</strong>
+                    <p>ก่อน-หลังเรียนทุกหน่วย</p>
+                  </div>
+                </div>
+                <div class="auth-feature">
+                  <span class="auth-feature-icon">🏆</span>
+                  <div>
+                    <strong>ใบรับรอง</strong>
+                    <p>รับเมื่อเรียนจบแต่ละหน่วย</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="auth-panel-decoration">
+              <div class="auth-orb auth-orb-1"></div>
+              <div class="auth-orb auth-orb-2"></div>
+            </div>
+          </div>
+          <div class="auth-form-side">
+            <div class="auth-card">
+              <div class="auth-icon">🚀</div>
+              <h2 class="auth-title">สร้างบัญชีผู้ใช้</h2>
+              <p class="auth-subtitle">กรอกข้อมูลเพื่อเริ่มต้นเรียนรู้ฟรี</p>
+              <form id="register-form" onsubmit="handleRegister(event)">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>ชื่อจริง</label>
+                    <div class="input-wrapper">
+                      <span class="input-icon">✏️</span>
+                      <input type="text" id="reg-firstname" placeholder="ชื่อจริง" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>นามสกุล</label>
+                    <div class="input-wrapper">
+                      <span class="input-icon">✏️</span>
+                      <input type="text" id="reg-lastname" placeholder="นามสกุล" required />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>ชื่อผู้ใช้ (Username)</label>
+                  <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="reg-username" placeholder="username" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>อีเมล</label>
+                  <div class="input-wrapper">
+                    <span class="input-icon">📧</span>
+                    <input type="email" id="reg-email" placeholder="email@example.com" required />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <div class="input-wrapper">
+                      <span class="input-icon">🔒</span>
+                      <input type="password" id="reg-password" placeholder="••••••••" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>ยืนยันรหัสผ่าน</label>
+                    <div class="input-wrapper">
+                      <span class="input-icon">🔒</span>
+                      <input type="password" id="reg-confirm" placeholder="••••••••" required />
+                    </div>
+                  </div>
+                </div>
+                <div id="reg-error" class="form-error hidden"></div>
+                <button type="submit" class="btn-primary btn-full">สมัครสมาชิก →</button>
+                <p class="auth-switch">มีบัญชีอยู่แล้ว? <a href="#" onclick="navigate('login')">เข้าสู่ระบบ</a></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGIN PAGE -->
+      <div id="page-login" class="page">
+        <div class="auth-split login-split">
+          <div class="auth-form-side">
+            <div class="auth-card">
+              <div class="auth-icon">🔐</div>
+              <h2 class="auth-title">ยินดีต้อนรับกลับ</h2>
+              <p class="auth-subtitle">เข้าสู่ระบบเพื่อเรียนรู้ต่อ</p>
+              <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                  <label>ชื่อผู้ใช้</label>
+                  <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="login-username" placeholder="username" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>รหัสผ่าน</label>
+                  <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="login-password" placeholder="••••••••" required />
+                    <a href="#" class="input-link" onclick="showForgot()">ลืมรหัสผ่าน?</a>
+                  </div>
+                </div>
+                <div id="login-error" class="form-error hidden"></div>
+                <button type="submit" class="btn-primary btn-full">เข้าสู่ระบบ →</button>
+                <p class="auth-switch">ยังไม่มีบัญชี? <a href="#" onclick="navigate('register')">สมัครสมาชิก</a></p>
+              </form>
+            </div>
+          </div>
+          <div class="auth-panel login-panel">
+            <div class="auth-panel-content">
+              <div class="auth-panel-logo" onclick="navigate('home')">
+                <span class="logo-icon">⬡</span>
+                <span>Backend <span class="logo-accent">Mastery</span></span>
+              </div>
+              <h2 class="auth-panel-title">เรียนรู้ต่อ<br>จากจุดที่คุณหยุดไว้</h2>
+              <p class="auth-panel-desc">ความก้าวหน้าของคุณถูกบันทึกไว้เสมอ</p>
+              <div class="login-code-preview">
+                <div class="code-mini-window">
+                  <div class="code-mini-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                  </div>
+                  <pre class="code-mini-body"><code><span class="c-blue">const</span> user = <span class="c-purple">await</span> login({
+  username: <span class="c-yellow">'you'</span>,
+  password: <span class="c-yellow">'••••••'</span>
+});
+<span class="c-green">// ✅ Welcome back!</span></code></pre>
+                </div>
+              </div>
+              <div class="login-stats-row">
+                <div class="login-stat"><span>6</span> หน่วย</div>
+                <div class="login-stat"><span>18</span> บทเรียน</div>
+                <div class="login-stat"><span>60</span> ข้อสอบ</div>
+              </div>
+            </div>
+            <div class="auth-panel-decoration">
+              <div class="auth-orb auth-orb-1"></div>
+              <div class="auth-orb auth-orb-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE PAGE -->
+      <div id="page-profile" class="page">
+        <div class="container py-4">
+          <div class="profile-layout">
+            <div class="profile-card" id="profile-card"></div>
+            <div class="profile-details" id="profile-details"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY COURSES PAGE -->
+      <div id="page-my-courses" class="page">
+        <div class="container py-4">
+          <h1 class="page-title">บทเรียนของฉัน</h1>
+          <div id="my-courses-grid" class="courses-grid"></div>
+        </div>
+      </div>
+
+      <!-- ADMIN PAGE -->
+      <div id="page-admin" class="page">
+        <div class="admin-layout">
+          <aside class="admin-sidebar">
+            <div class="admin-logo">⚙️ Admin Panel</div>
+            <nav class="admin-nav">
+              <a href="#" class="admin-nav-link active" data-section="users" onclick="showAdminSection('users')">👥 จัดการผู้ใช้</a>
+              <a href="#" class="admin-nav-link" data-section="courses" onclick="showAdminSection('courses')">📚 จัดการบทเรียน</a>
+              <a href="#" class="admin-nav-link" data-section="quizzes" onclick="showAdminSection('quizzes')">📝 จัดการแบบทดสอบ</a>
+              <a href="#" class="admin-nav-link" data-section="stats" onclick="showAdminSection('stats')">📊 สถิติ</a>
+            </nav>
+          </aside>
+          <div class="admin-content">
+            <div id="admin-section-users" class="admin-section active">
+              <div class="admin-header">
+                <h2>จัดการผู้ใช้งาน</h2>
+                <button class="btn-primary" onclick="showAddUser()">+ เพิ่มผู้ใช้</button>
+              </div>
+              <div id="admin-users-table"></div>
+            </div>
+            <div id="admin-section-courses" class="admin-section">
+              <div class="admin-header">
+                <h2>จัดการบทเรียน</h2>
+                <button class="btn-primary" onclick="showAddCourse()">+ เพิ่มบทเรียน</button>
+              </div>
+              <div id="admin-courses-table"></div>
+            </div>
+            <div id="admin-section-quizzes" class="admin-section">
+              <div class="admin-header">
+                <h2>จัดการแบบทดสอบ</h2>
+              </div>
+              <div id="admin-quizzes-table"></div>
+            </div>
+            <div id="admin-section-stats" class="admin-section">
+              <div class="admin-header"><h2>สถิติระบบ</h2></div>
+              <div id="admin-stats-grid" class="stats-grid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer">
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="logo-icon">⬡</span>
+              <span>Backend <span class="logo-accent">Mastery</span></span>
+            </div>
+            <p class="footer-tagline">แพลตฟอร์มเรียนรู้ Back-End Development ภาษาไทย ครบจบในที่เดียว</p>
+          </div>
+          <div class="footer-links-group">
+            <div class="footer-col">
+              <h4>บทเรียน</h4>
+              <a href="#" onclick="navigate('courses')">บทเรียนทั้งหมด</a>
+              <a href="#" onclick="navigate('quiz-list')">แบบทดสอบ</a>
+            </div>
+            <div class="footer-col">
+              <h4>เกี่ยวกับ</h4>
+              <a href="#" onclick="navigate('about')">เกี่ยวกับเรา</a>
+              <a href="#" onclick="navigate('register')">สมัครสมาชิก</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-stats-row" id="footer-stats"></div>
+        <div class="footer-bottom">
+          <p>© 2024 Backend Mastery — สร้างด้วย ❤️ สำหรับ Back-End Developer ไทย</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast-container"></div>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="กลับขึ้นบนสุด" aria-label="กลับขึ้นบนสุด">
+    ↑
+  </button>
+
+  <script src="app.js"></script>
+  <script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const links = document.getElementById('nav-links');
+      const btn = document.getElementById('mobile-menu-btn');
+      links.classList.toggle('mobile-open');
+      btn.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
