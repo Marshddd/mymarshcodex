@@ -2555,3 +2555,356 @@ button[disabled] {
     font-size: clamp(38px, 13vw, 54px);
   }
 }
+
+/* ===== WHITE PREMIUM THEME OVERRIDES ===== */
+:root {
+  --bg-900: #fafafa;
+  --bg-800: #ffffff;
+  --bg-700: #f4f4f5;
+  --bg-600: #e4e4e7;
+  --bg-card: #ffffff;
+  --border: rgba(24, 24, 27, 0.1);
+  --border-light: rgba(24, 24, 27, 0.08);
+  --accent: #4f46e5;
+  --accent-light: #4f46e5;
+  --accent-glow: rgba(79, 70, 229, 0.08);
+  --green: #10b981;
+  --yellow: #f59e0b;
+  --red: #ef4444;
+  --purple: #312e81;
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-dim: #71717a;
+  --radius: 12px;
+  --radius-sm: 10px;
+  --shadow: 0 24px 70px rgba(24, 24, 27, 0.08);
+  --shadow-card: 0 12px 34px rgba(24, 24, 27, 0.06);
+}
+
+body {
+  background: #fafafa;
+  color: var(--text);
+}
+
+.navbar,
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: none;
+}
+
+.nav-logo,
+.footer-logo,
+.auth-panel-logo,
+.section-title,
+.page-title,
+.about-title,
+.lesson-title,
+.lesson-sidebar h3,
+.quiz-header h1,
+.result-title,
+.auth-title,
+.admin-header h2,
+.course-title,
+.feature-card h3,
+.roadmap-item h4,
+.lesson-body h3,
+.quiz-card-item h3,
+.profile-section h3,
+.data-table th,
+.certificate-course {
+  color: var(--text);
+}
+
+.nav-link,
+.dropdown-item,
+.course-desc,
+.hero-desc,
+.section-subtitle,
+.page-subtitle,
+.lesson-body,
+.testimonial-text,
+.about-card p,
+.footer-tagline,
+.lesson-sidebar,
+.lesson-nav-item,
+.course-meta,
+.muted {
+  color: var(--text-muted);
+}
+
+.nav-link:hover,
+.nav-link.active,
+.dropdown-item:hover,
+.lesson-nav-item:hover {
+  color: var(--text);
+  background: #f4f4f5;
+}
+
+.btn-primary,
+.user-avatar,
+.profile-avatar,
+.testimonial-avatar,
+.back-to-top,
+.roadmap-num {
+  background: #4f46e5;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(79, 70, 229, 0.14);
+}
+
+.btn-primary:hover,
+.btn-outline:hover,
+.btn-ghost:hover,
+.course-card:hover,
+.feature-card:hover,
+.roadmap-item:hover,
+.testimonial-card:hover,
+.about-card:hover,
+.stat-card:hover,
+.quiz-card-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px rgba(24, 24, 27, 0.08);
+}
+
+.btn-outline {
+  color: var(--accent);
+  border-color: rgba(79, 70, 229, 0.28);
+  background: #ffffff;
+}
+
+.btn-outline:hover {
+  background: rgba(79, 70, 229, 0.06);
+}
+
+.btn-ghost {
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.hero,
+#page-home .hero {
+  background: #fafafa;
+}
+
+.hero-bg,
+#page-home .hero-bg,
+.roadmap,
+.about-hero {
+  background:
+    linear-gradient(rgba(24, 24, 27, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 24, 27, 0.035) 1px, transparent 1px),
+    #fafafa;
+  background-size: 48px 48px;
+}
+
+.hero-badge,
+.tech-badge,
+.lesson-watch-label,
+.certificate-seal {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--accent);
+  box-shadow: 0 6px 18px rgba(24, 24, 27, 0.04);
+}
+
+.hero-title {
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #4f46e5, #18181b);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.features,
+.testimonials,
+.footer,
+.lesson-sidebar,
+.admin-sidebar {
+  background: #ffffff;
+}
+
+.course-card,
+.feature-card,
+.roadmap-item,
+.quiz-card,
+.quiz-card-item,
+.testimonial-card,
+.about-card,
+.profile-card,
+.profile-section,
+.stat-card,
+.auth-card,
+.modal,
+.data-table,
+.lesson-watch-main,
+.lesson-watch-side,
+.lesson-summary-card,
+.certificate-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+.course-card:hover,
+.feature-card:hover,
+.roadmap-item:hover,
+.quiz-card-item:hover,
+.testimonial-card:hover,
+.about-card:hover,
+.stat-card:hover {
+  border-color: rgba(79, 70, 229, 0.18);
+}
+
+.course-banner {
+  background: #f4f4f5 !important;
+}
+
+.lesson-layout,
+.admin-layout {
+  background: #fafafa;
+}
+
+.lesson-sidebar,
+.admin-sidebar {
+  border-right: 1px solid var(--border-light);
+}
+
+.lesson-nav-item.active {
+  background: rgba(79, 70, 229, 0.08);
+  border-color: rgba(79, 70, 229, 0.26);
+  color: var(--accent);
+}
+
+.lesson-progress div,
+.course-progress {
+  background: #e4e4e7;
+}
+
+.lesson-progress i,
+.course-progress-bar {
+  background: #4f46e5;
+}
+
+.lesson-video-frame {
+  background:
+    linear-gradient(rgba(24, 24, 27, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 24, 27, 0.035) 1px, transparent 1px),
+    #f4f4f5;
+  background-size: 32px 32px;
+  border-color: var(--border);
+}
+
+.lesson-video-placeholder strong {
+  color: var(--text);
+}
+
+.lesson-video-placeholder span,
+.lesson-video-placeholder p {
+  color: var(--text-muted);
+}
+
+.lesson-play-button {
+  background: #4f46e5;
+  box-shadow: 0 12px 26px rgba(79, 70, 229, 0.16);
+}
+
+.lesson-body pre,
+.code-window,
+.code-mini-window,
+.lesson-terminal,
+.code-card {
+  background: #18181b;
+  border-color: #27272a;
+  box-shadow: 0 18px 48px rgba(24, 24, 27, 0.12);
+}
+
+.lesson-body pre code,
+.code-body,
+.code-mini-body,
+.lesson-terminal code {
+  color: #fafafa;
+}
+
+.lesson-body code {
+  background: rgba(79, 70, 229, 0.08);
+  color: var(--accent);
+}
+
+.lesson-body pre code {
+  background: transparent;
+}
+
+.input-wrapper,
+.search-bar,
+.form-group input,
+.form-group textarea,
+.form-group select,
+.admin-input,
+.admin-textarea,
+input,
+textarea,
+select {
+  background: #ffffff;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.search-bar input,
+.input-wrapper input,
+.input-wrapper textarea,
+.input-wrapper select {
+  color: var(--text);
+}
+
+.input-wrapper input::placeholder,
+.search-bar input::placeholder,
+textarea::placeholder {
+  color: #a1a1aa;
+}
+
+.data-table th {
+  background: #f4f4f5;
+}
+
+.data-table td,
+.data-table th {
+  border-bottom-color: var(--border-light);
+}
+
+.modal-overlay {
+  background: rgba(24, 24, 27, 0.42);
+}
+
+.toast,
+.user-dropdown {
+  background: #ffffff;
+  color: var(--text);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+.footer {
+  border-top: 1px solid var(--border-light);
+}
+
+.footer-stats-row,
+.footer-bottom,
+.dropdown-divider,
+.lesson-actions {
+  border-color: var(--border-light);
+}
+
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
