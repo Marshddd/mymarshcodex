@@ -3,15 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
+import { fallbackQuizzes, withFallbackQuizzes } from '@/lib/fallback-content';
 
 export default function QuizPage() {
-  const [quizzes, setQuizzes] = useState([]);
+  const [quizzes, setQuizzes] = useState(fallbackQuizzes);
 
   useEffect(() => {
     fetch('/api/quizzes')
       .then((response) => response.json())
-      .then(setQuizzes)
-      .catch(() => setQuizzes([]));
+      .then((data) => setQuizzes(withFallbackQuizzes(data)))
+      .catch(() => setQuizzes(fallbackQuizzes));
   }, []);
 
   return (

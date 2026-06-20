@@ -3,15 +3,16 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
+import { fallbackCourses, withFallbackCourses } from '@/lib/fallback-content';
 
 export default function HomePage() {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(fallbackCourses);
 
   useEffect(() => {
     fetch('/api/courses')
       .then((response) => response.json())
-      .then(setCourses)
-      .catch(() => setCourses([]));
+      .then((data) => setCourses(withFallbackCourses(data)))
+      .catch(() => setCourses(fallbackCourses));
   }, []);
 
   return (

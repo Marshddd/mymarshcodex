@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { use, useEffect, useState } from 'react';
 import Nav from '@/components/Nav';
+import { findFallbackCourse } from '@/lib/fallback-content';
 
 export default function CoursePage({ params }) {
   const { id } = use(params);
@@ -17,10 +18,13 @@ export default function CoursePage({ params }) {
     fetch(`/api/courses/${id}`)
       .then((response) => response.ok ? response.json() : null)
       .then((data) => {
-        setCourse(data);
+        setCourse(data || findFallbackCourse(id));
         setLoaded(true);
       })
-      .catch(() => setLoaded(true));
+      .catch(() => {
+        setCourse(findFallbackCourse(id));
+        setLoaded(true);
+      });
   }, [id]);
 
   function markLesson(lessonId) {
