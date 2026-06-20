@@ -6,7 +6,10 @@ export async function POST(request) {
   const payload = await request.json();
   const username = String(payload.username || '').trim();
   const password = String(payload.password || '');
-  const name = String(payload.name || '').trim();
+  const firstname = String(payload.firstname || '').trim();
+  const lastname = String(payload.lastname || '').trim();
+  const email = String(payload.email || '').trim();
+  const name = String(payload.name || `${firstname} ${lastname}`.trim()).trim();
 
   if (!username || !password || !name) {
     return json({ error: 'กรุณากรอกข้อมูลให้ครบ' }, { status: 400 });
@@ -22,6 +25,9 @@ export async function POST(request) {
     username,
     password,
     name,
+    firstname,
+    lastname,
+    email,
     role: 'user',
     progress: {},
     quizResults: {}
@@ -35,6 +41,9 @@ export async function POST(request) {
       id: user.id,
       username: user.username,
       name: user.name,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
       role: user.role,
       progress: user.progress,
       quizResults: user.quizResults

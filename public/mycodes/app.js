@@ -1211,13 +1211,13 @@ function buildRouteHash(page, data = {}) {
 
 function saveLastRoute(page, data = {}) {
   try {
-    localStorage.setItem('bm_last_route', JSON.stringify({ page, data }));
+    sessionStorage.setItem('bm_last_route', JSON.stringify({ page, data }));
   } catch {}
 }
 
 function getLastRoute() {
   try {
-    const route = JSON.parse(localStorage.getItem('bm_last_route') || 'null');
+    const route = JSON.parse(sessionStorage.getItem('bm_last_route') || 'null');
     if (!route || !route.page) return null;
     return route;
   } catch {
@@ -1229,7 +1229,7 @@ function getInitialRouteFromHash() {
   const raw = window.location.hash.replace('#', '').trim();
   const [page = 'home', query = ''] = raw.split('?');
   const allowedPages = ['home', 'courses', 'quiz-list', 'about', 'login', 'register', 'profile', 'my-courses', 'admin', 'lesson', 'quiz', 'certificate'];
-  if (!raw) return getLastRoute() || { page: 'home', data: {} };
+  if (!raw) return { page: 'home', data: {} };
 
   const nextPage = allowedPages.includes(page) ? page : 'home';
   const params = new URLSearchParams(query);
@@ -1245,11 +1245,39 @@ function getInitialRouteFromHash() {
 }
 
 function replaceRouteHash(page, data, options = {}) {
+  if (!options.forceHash) return;
   const nextHash = buildRouteHash(page, data);
   if (window.location.hash !== nextHash) {
     history.replaceState(null, '', nextHash);
   }
   if (!options.skipSave) saveLastRoute(page, data);
+}
+
+let contentRefreshPromise = null;
+
+function refreshContentForPage(page, data) {
+  if (!['courses', 'lesson', 'quiz-list', 'quiz', 'my-courses'].includes(page)) return;
+  if (!contentRefreshPromise) {
+    contentRefreshPromise = loadServerContent().finally(() => {
+      contentRefreshPromise = null;
+    });
+  }
+
+  contentRefreshPromise.then(() => {
+    if (currentPage !== page) return;
+    if (page === 'courses') renderCourses();
+    if (page === 'quiz-list') renderQuizList();
+    if (page === 'my-courses') renderMyCourses();
+    if (page === 'lesson') {
+      const courseId = data?.courseId || currentCourse?.id || COURSES[0]?.id;
+      const lessonId = data?.lessonId || currentLesson?.id;
+      openLesson(courseId, lessonId);
+    }
+    if (page === 'quiz') {
+      const quizId = data?.quizId || currentQuiz?.id;
+      if (quizId) openQuiz(quizId);
+    }
+  }).catch(() => {});
 }
 
 function initDefaultData() {
@@ -1343,6 +1371,7 @@ function navigate(page, data) {
     if (data?.courseId) showCertificate(data.courseId);
     else navigate('my-courses');
   }
+  refreshContentForPage(page, data);
 }
 
 // ===== UPDATE NAV =====
@@ -1380,7 +1409,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ===== AUTH =====
-function handleRegister(e) {
+async function handleRegister(e) {
   e.preventDefault();
   const username = document.getElementById('reg-username').value.trim();
   const firstname = document.getElementById('reg-firstname').value.trim();
@@ -1393,64 +1422,78 @@ function handleRegister(e) {
   errEl.classList.add('hidden');
 
   if (password !== confirm) {
-    errEl.textContent = '❌ รหัสผ่านไม่ตรงกัน';
+    errEl.textContent = 'รหัสผ่านไม่ตรงกัน';
     errEl.classList.remove('hidden');
     return;
   }
   if (password.length < 6) {
-    errEl.textContent = '❌ รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
+    errEl.textContent = 'รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
     errEl.classList.remove('hidden');
     return;
   }
 
-  const users = DB.users;
-  if (users.find(u => u.username === username)) {
-    errEl.textContent = '❌ ชื่อผู้ใช้นี้มีอยู่แล้ว';
-    errEl.classList.remove('hidden');
-    return;
-  }
-  if (users.find(u => u.email === email)) {
-    errEl.textContent = '❌ อีเมลนี้มีอยู่แล้ว';
-    errEl.classList.remove('hidden');
-    return;
-  }
+  try {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, firstname, lastname, email })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Register failed');
 
-  const newUser = {
-    id: 'u-' + Date.now(),
-    username, firstname, lastname, email, password,
-    role: 'user',
-    createdAt: new Date().toISOString()
-  };
-  DB.users = [...users, newUser];
-  DB.currentUser = newUser;
-  updateNav();
-  showToast('✅ สมัครสมาชิกสำเร็จ! ยินดีต้อนรับ', 'success');
-  navigate('home');
-  document.getElementById('register-form').reset();
+    const newUser = {
+      ...data.user,
+      firstname: data.user.firstname || firstname,
+      lastname: data.user.lastname || lastname,
+      email: data.user.email || email,
+      password
+    };
+    DB.users = [...DB.users.filter(u => u.id !== newUser.id && u.username !== newUser.username), newUser];
+    DB.currentUser = newUser;
+    updateNav();
+    showToast('สมัครสมาชิกและบันทึกบัญชีออนไลน์แล้ว', 'success');
+    navigate('home');
+    document.getElementById('register-form').reset();
+  } catch (error) {
+    errEl.textContent = error.message || 'สมัครสมาชิกไม่สำเร็จ';
+    errEl.classList.remove('hidden');
+  }
 }
 
-function handleLogin(e) {
+async function handleLogin(e) {
   e.preventDefault();
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value;
   const errEl = document.getElementById('login-error');
   errEl.classList.add('hidden');
 
-  const users = DB.users;
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) {
-    errEl.textContent = '❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
+  try {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Login failed');
+
+    const user = {
+      ...data.user,
+      firstname: data.user.firstname || data.user.name || data.user.username,
+      lastname: data.user.lastname || '',
+      email: data.user.email || '',
+      password
+    };
+    DB.users = [...DB.users.filter(u => u.id !== user.id && u.username !== user.username), user];
+    DB.currentUser = user;
+    updateNav();
+    showToast(`ยินดีต้อนรับกลับมา, ${user.firstname}!`, 'success');
+    navigate('home');
+    document.getElementById('login-form').reset();
+  } catch (error) {
+    errEl.textContent = error.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
     errEl.classList.remove('hidden');
-    return;
   }
-
-  DB.currentUser = user;
-  updateNav();
-  showToast(`✅ ยินดีต้อนรับกลับมา, ${user.firstname}!`, 'success');
-  navigate('home');
-  document.getElementById('login-form').reset();
 }
-
 function logout() {
   DB.currentUser = null;
   updateNav();

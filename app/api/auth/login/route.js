@@ -20,6 +20,9 @@ export async function POST(request) {
       id: user.id,
       username: user.username,
       name: user.name,
+      firstname: user.firstname || user.name?.split(' ')?.[0] || user.username,
+      lastname: user.lastname || user.name?.split(' ')?.slice(1).join(' ') || '',
+      email: user.email || '',
       role: user.role,
       progress: user.progress || {},
       quizResults: user.quizResults || {}
