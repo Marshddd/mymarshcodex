@@ -1079,8 +1079,8 @@ function loadCourseOverrides() {
 async function loadServerContent() {
   try {
     const [coursesResponse, quizzesResponse] = await Promise.all([
-      fetch('/api/courses', { cache: 'no-store' }),
-      fetch('/api/quizzes', { cache: 'no-store' })
+      fetch(`/api/courses?t=${Date.now()}`, { cache: 'no-store' }),
+      fetch(`/api/quizzes?t=${Date.now()}`, { cache: 'no-store' })
     ]);
 
     if (coursesResponse.ok) {
@@ -1111,6 +1111,7 @@ async function syncCoursesToServer() {
       body: JSON.stringify({ courses: COURSES })
     });
     if (!response.ok) throw new Error('sync courses failed');
+    showToast('บันทึกบทเรียนออนไลน์แล้ว ผู้ใช้คนอื่นรีเฟรชแล้วจะเห็นข้อมูลใหม่', 'success');
   } catch (error) {
     console.error(error);
     showToast('บันทึกบทเรียนลงออนไลน์ไม่สำเร็จ ลองใหม่อีกครั้ง', 'error');
@@ -1143,6 +1144,7 @@ async function syncQuizzesToServer() {
       body: JSON.stringify({ quizzes: QUIZZES })
     });
     if (!response.ok) throw new Error('sync quizzes failed');
+    showToast('บันทึกแบบทดสอบออนไลน์แล้ว ผู้ใช้คนอื่นรีเฟรชแล้วจะเห็นข้อมูลใหม่', 'success');
   } catch (error) {
     console.error(error);
     showToast('บันทึกแบบทดสอบลงออนไลน์ไม่สำเร็จ ลองใหม่อีกครั้ง', 'error');
