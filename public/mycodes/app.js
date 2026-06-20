@@ -1183,10 +1183,28 @@ function buildRouteHash(page, data = {}) {
   return query ? `#${page}?${query}` : `#${page}`;
 }
 
+function saveLastRoute(page, data = {}) {
+  try {
+    localStorage.setItem('bm_last_route', JSON.stringify({ page, data }));
+  } catch {}
+}
+
+function getLastRoute() {
+  try {
+    const route = JSON.parse(localStorage.getItem('bm_last_route') || 'null');
+    if (!route || !route.page) return null;
+    return route;
+  } catch {
+    return null;
+  }
+}
+
 function getInitialRouteFromHash() {
   const raw = window.location.hash.replace('#', '').trim();
   const [page = 'home', query = ''] = raw.split('?');
   const allowedPages = ['home', 'courses', 'quiz-list', 'about', 'login', 'register', 'profile', 'my-courses', 'admin', 'lesson', 'quiz', 'certificate'];
+  if (!raw) return getLastRoute() || { page: 'home', data: {} };
+
   const nextPage = allowedPages.includes(page) ? page : 'home';
   const params = new URLSearchParams(query);
 
@@ -1200,11 +1218,12 @@ function getInitialRouteFromHash() {
   };
 }
 
-function replaceRouteHash(page, data) {
+function replaceRouteHash(page, data, options = {}) {
   const nextHash = buildRouteHash(page, data);
   if (window.location.hash !== nextHash) {
     history.replaceState(null, '', nextHash);
   }
+  if (!options.skipSave) saveLastRoute(page, data);
 }
 
 function initDefaultData() {
