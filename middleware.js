@@ -3,6 +3,10 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
   const { pathname } = request.nextUrl;
 
+  if (pathname === '/mycodes' || pathname === '/mycodes/') {
+    return NextResponse.rewrite(new URL('/mycodes/index.html', request.url));
+  }
+
   const isSystemPath =
     pathname.startsWith('/api') ||
     pathname.startsWith('/_next') ||
@@ -19,5 +23,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|mycodes).*)']
+  matcher: ['/((?!api|_next).*)']
 };
