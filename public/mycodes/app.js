@@ -1076,10 +1076,52 @@ function loadCourseOverrides() {
   COURSES.splice(0, COURSES.length, ...DB.courses);
 }
 
+async function loadServerContent() {
+  try {
+    const [coursesResponse, quizzesResponse] = await Promise.all([
+      fetch('/api/courses', { cache: 'no-store' }),
+      fetch('/api/quizzes', { cache: 'no-store' })
+    ]);
+
+    if (coursesResponse.ok) {
+      const courses = await coursesResponse.json();
+      if (Array.isArray(courses) && courses.length) {
+        COURSES.splice(0, COURSES.length, ...courses);
+        DB.courses = COURSES;
+      }
+    }
+
+    if (quizzesResponse.ok) {
+      const quizzes = await quizzesResponse.json();
+      if (Array.isArray(quizzes) && quizzes.length) {
+        QUIZZES.splice(0, QUIZZES.length, ...quizzes);
+        DB.quizzes = QUIZZES;
+      }
+    }
+  } catch (error) {
+    console.warn('ใช้ข้อมูลในเครื่อง เพราะโหลดข้อมูลออนไลน์ไม่สำเร็จ', error);
+  }
+}
+
+async function syncCoursesToServer() {
+  try {
+    const response = await fetch('/api/courses/sync', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ courses: COURSES })
+    });
+    if (!response.ok) throw new Error('sync courses failed');
+  } catch (error) {
+    console.error(error);
+    showToast('บันทึกบทเรียนลงออนไลน์ไม่สำเร็จ ลองใหม่อีกครั้ง', 'error');
+  }
+}
+
 function saveCourses() {
   DB.courses = COURSES;
   renderHomeCoursesPreview();
   renderFooterStats();
+  syncCoursesToServer();
 }
 
 function loadQuizOverrides() {
@@ -1090,6 +1132,21 @@ function loadQuizOverrides() {
 function saveQuizzes() {
   DB.quizzes = QUIZZES;
   renderFooterStats();
+  syncQuizzesToServer();
+}
+
+async function syncQuizzesToServer() {
+  try {
+    const response = await fetch('/api/quizzes/sync', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ quizzes: QUIZZES })
+    });
+    if (!response.ok) throw new Error('sync quizzes failed');
+  } catch (error) {
+    console.error(error);
+    showToast('บันทึกแบบทดสอบลงออนไลน์ไม่สำเร็จ ลองใหม่อีกครั้ง', 'error');
+  }
 }
 
 function closeMobileMenu() {
@@ -1100,9 +1157,10 @@ function closeMobileMenu() {
 }
 
 // ===== INIT =====
-function init() {
+async function init() {
   loadCourseOverrides();
   loadQuizOverrides();
+  await loadServerContent();
   initDefaultData();
   initParticles();
   initTypingAnimation();
