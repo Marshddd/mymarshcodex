@@ -1071,6 +1071,25 @@ function escapeHtml(value = '') {
     .replace(/'/g, '&#039;');
 }
 
+function normalizeVideoUrl(url = '') {
+  const value = String(url || '').trim();
+  if (!value) return '';
+
+  try {
+    const parsed = new URL(value);
+    if (parsed.hostname.includes('youtube.com')) {
+      const videoId = parsed.searchParams.get('v');
+      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (parsed.hostname.includes('youtu.be')) {
+      const videoId = parsed.pathname.replace('/', '');
+      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+    }
+  } catch {}
+
+  return value;
+}
+
 function loadCourseOverrides() {
   if (!DB.courses) return;
   COURSES.splice(0, COURSES.length, ...DB.courses);
@@ -1111,10 +1130,17 @@ async function syncCoursesToServer() {
       body: JSON.stringify({ courses: COURSES })
     });
     if (!response.ok) throw new Error('sync courses failed');
+    const result = await response.json().catch(() => null);
+    if (Array.isArray(result?.courses)) {
+      COURSES.splice(0, COURSES.length, ...result.courses);
+      DB.courses = COURSES;
+    }
     showToast('บันทึกบทเรียนออนไลน์แล้ว ผู้ใช้คนอื่นรีเฟรชแล้วจะเห็นข้อมูลใหม่', 'success');
+    return true;
   } catch (error) {
     console.error(error);
     showToast('บันทึกบทเรียนลงออนไลน์ไม่สำเร็จ ลองใหม่อีกครั้ง', 'error');
+    return false;
   }
 }
 
@@ -1122,7 +1148,7 @@ function saveCourses() {
   DB.courses = COURSES;
   renderHomeCoursesPreview();
   renderFooterStats();
-  syncCoursesToServer();
+  return syncCoursesToServer();
 }
 
 function loadQuizOverrides() {
@@ -2699,7 +2725,7 @@ function showAddCourse() {
   `);
 }
 
-function confirmAddCourse() {
+async function confirmAddCourse() {
   const title = document.getElementById('course-title').value.trim();
   const unit = document.getElementById('course-unit').value.trim();
   const desc = document.getElementById('course-desc').value.trim();
@@ -2712,7 +2738,8 @@ function confirmAddCourse() {
 
   const id = Date.now();
   COURSES.push({ id, unit, title, desc, icon, color, lessons: [] });
-  saveCourses();
+  const saved = await saveCourses();
+  if (!saved) return;
   closeModal();
   renderAdminCourses();
   renderAdminStats();
@@ -2729,7 +2756,7 @@ function showEditCourse(courseId) {
   `);
 }
 
-function saveEditCourse(courseId) {
+async function saveEditCourse(courseId) {
   const course = COURSES.find(c => c.id === courseId);
   if (!course) return;
   const title = document.getElementById('course-title').value.trim();
@@ -2743,7 +2770,8 @@ function saveEditCourse(courseId) {
   }
 
   Object.assign(course, { title, unit, desc, icon, color });
-  saveCourses();
+  const saved = await saveCourses();
+  if (!saved) return;
   closeModal();
   renderAdminCourses();
   renderAdminStats();
@@ -2763,11 +2791,16 @@ function deleteCourse(courseId) {
   `);
 }
 
-function confirmDeleteCourse(courseId) {
+async function confirmDeleteCourse(courseId) {
   const idx = COURSES.findIndex(c => c.id === courseId);
   if (idx === -1) return;
-  COURSES.splice(idx, 1);
-  saveCourses();
+  const [removed] = COURSES.splice(idx, 1);
+  const saved = await saveCourses();
+  if (!saved) {
+    COURSES.splice(idx, 0, removed);
+    DB.courses = COURSES;
+    return;
+  }
   closeModal();
   renderAdminCourses();
   renderAdminStats();
@@ -2840,24 +2873,30 @@ function showAddLesson(courseId) {
   `);
 }
 
-function confirmAddLesson(courseId) {
+async function confirmAddLesson(courseId) {
   const course = COURSES.find(c => c.id === courseId);
   if (!course) return;
   const title = document.getElementById('lesson-title-input').value.trim();
-  const videoUrl = document.getElementById('lesson-video-input').value.trim();
+  const videoUrl = normalizeVideoUrl(document.getElementById('lesson-video-input').value);
   const content = document.getElementById('lesson-content-input').value.trim();
   if (!title || !content) {
     showToast('กรุณากรอกชื่อและเนื้อหาบทเรียน', 'error');
     return;
   }
 
-  course.lessons.push({
+  const lesson = {
     id: `l${courseId}-${Date.now()}`,
     title,
     videoUrl,
     content
-  });
-  saveCourses();
+  };
+  course.lessons.push(lesson);
+  const saved = await saveCourses();
+  if (!saved) {
+    course.lessons = course.lessons.filter((item) => item.id !== lesson.id);
+    DB.courses = COURSES;
+    return;
+  }
   closeModal();
   renderAdminCourses();
   showManageLessons(courseId);
@@ -2875,20 +2914,26 @@ function showEditLesson(courseId, lessonId) {
   `);
 }
 
-function saveEditLesson(courseId, lessonId) {
+async function saveEditLesson(courseId, lessonId) {
   const course = COURSES.find(c => c.id === courseId);
   const lesson = course?.lessons.find(l => l.id === lessonId);
   if (!course || !lesson) return;
   const title = document.getElementById('lesson-title-input').value.trim();
-  const videoUrl = document.getElementById('lesson-video-input').value.trim();
+  const videoUrl = normalizeVideoUrl(document.getElementById('lesson-video-input').value);
   const content = document.getElementById('lesson-content-input').value.trim();
   if (!title || !content) {
     showToast('กรุณากรอกชื่อและเนื้อหาบทเรียน', 'error');
     return;
   }
 
+  const previous = { title: lesson.title, videoUrl: lesson.videoUrl, content: lesson.content };
   Object.assign(lesson, { title, videoUrl, content });
-  saveCourses();
+  const saved = await saveCourses();
+  if (!saved) {
+    Object.assign(lesson, previous);
+    DB.courses = COURSES;
+    return;
+  }
   closeModal();
   renderAdminCourses();
   showManageLessons(courseId);
@@ -2909,11 +2954,17 @@ function deleteLesson(courseId, lessonId) {
   `);
 }
 
-function confirmDeleteLesson(courseId, lessonId) {
+async function confirmDeleteLesson(courseId, lessonId) {
   const course = COURSES.find(c => c.id === courseId);
   if (!course) return;
+  const previousLessons = [...course.lessons];
   course.lessons = course.lessons.filter(l => l.id !== lessonId);
-  saveCourses();
+  const saved = await saveCourses();
+  if (!saved) {
+    course.lessons = previousLessons;
+    DB.courses = COURSES;
+    return;
+  }
   closeModal();
   renderAdminCourses();
   showManageLessons(courseId);
