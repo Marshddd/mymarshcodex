@@ -25,7 +25,7 @@ export default function LearnPage() {
               <h3>{course.icon} {course.unit}</h3>
               <h2>{course.title}</h2>
               <p className="muted">{course.desc}</p>
-              <p className="muted">{course.lessons.length} บทเรียนย่อย</p>
+              <p className="muted">{course.lessons?.length || 0} บทเรียนย่อย</p>
             </Link>
           ))}
         </div>

@@ -76,7 +76,7 @@ export default function CoursePage({ params }) {
             ) : null}
 
             <div className="grid">
-              {course.lessons.map((lesson) => (
+              {(course.lessons || []).map((lesson) => (
                 <article className="card" key={lesson.id}>
                   <h3>{lesson.title}</h3>
                   <p className="muted">{lesson.content}</p>

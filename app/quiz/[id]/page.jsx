@@ -26,12 +26,12 @@ export default function QuizTakePage({ params }) {
   function submit() {
     if (!quiz || !user) return;
     let score = 0;
-    quiz.questions.forEach((question) => {
+    (quiz.questions || []).forEach((question) => {
       if (Number(answers[question.id]) === Number(question.correct)) score += 1;
     });
     const nextResult = {
       score,
-      total: quiz.questions.length,
+      total: (quiz.questions || []).length,
       submittedAt: new Date().toISOString()
     };
     const stored = JSON.parse(localStorage.getItem('bm_quiz_results') || '{}');
@@ -71,7 +71,7 @@ export default function QuizTakePage({ params }) {
   }
 
   const answered = Object.keys(answers).length;
-  const canSubmit = quiz.questions.length > 0 && answered === quiz.questions.length;
+  const canSubmit = (quiz.questions || []).length > 0 && answered === (quiz.questions || []).length;
 
   return (
     <main className="shell">
@@ -89,8 +89,8 @@ export default function QuizTakePage({ params }) {
           </div>
         ) : (
           <>
-            <p className="muted">ตอบแล้ว {answered}/{quiz.questions.length}</p>
-            {quiz.questions.map((question, index) => (
+            <p className="muted">ตอบแล้ว {answered}/{(quiz.questions || []).length}</p>
+            {(quiz.questions || []).map((question, index) => (
               <div className="card question-card" key={question.id}>
                 <h3>ข้อที่ {index + 1}. {question.question}</h3>
                 <div className="option-list">
@@ -109,7 +109,7 @@ export default function QuizTakePage({ params }) {
               </div>
             ))}
             <button className="btn" disabled={!canSubmit} onClick={submit}>
-              {canSubmit ? 'ส่งคำตอบ' : `ตอบอีก ${quiz.questions.length - answered} ข้อ`}
+              {canSubmit ? 'ส่งคำตอบ' : `ตอบอีก ${(quiz.questions || []).length - answered} ข้อ`}
             </button>
           </>
         )}

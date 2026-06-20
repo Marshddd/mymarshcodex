@@ -25,7 +25,7 @@ export default function QuizPage() {
               <p className="btn secondary">{quiz.type === 'pre' ? 'ก่อนเรียน' : 'หลังเรียน'}</p>
               <h2>{quiz.title}</h2>
               <p className="muted">{quiz.desc}</p>
-              <p className="muted">{quiz.questions.length} ข้อ</p>
+              <p className="muted">{quiz.questions?.length || 0} ข้อ</p>
               <Link className="btn" href={`/quiz/${quiz.id}`}>เริ่มทำแบบทดสอบ</Link>
             </article>
           ))}
