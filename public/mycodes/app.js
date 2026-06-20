@@ -1169,14 +1169,42 @@ async function init() {
   updateNav();
   renderHomeCoursesPreview();
   renderFooterStats();
-  navigate(getInitialPageFromHash());
+  const initialRoute = getInitialRouteFromHash();
+  navigate(initialRoute.page, initialRoute.data);
   initScrollObserver();
 }
 
-function getInitialPageFromHash() {
-  const page = window.location.hash.replace('#', '').trim();
-  const allowedPages = ['home', 'courses', 'quiz-list', 'about', 'login', 'register', 'profile', 'my-courses', 'admin'];
-  return allowedPages.includes(page) ? page : 'home';
+function buildRouteHash(page, data = {}) {
+  const params = new URLSearchParams();
+  Object.entries(data || {}).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') params.set(key, value);
+  });
+  const query = params.toString();
+  return query ? `#${page}?${query}` : `#${page}`;
+}
+
+function getInitialRouteFromHash() {
+  const raw = window.location.hash.replace('#', '').trim();
+  const [page = 'home', query = ''] = raw.split('?');
+  const allowedPages = ['home', 'courses', 'quiz-list', 'about', 'login', 'register', 'profile', 'my-courses', 'admin', 'lesson', 'quiz', 'certificate'];
+  const nextPage = allowedPages.includes(page) ? page : 'home';
+  const params = new URLSearchParams(query);
+
+  return {
+    page: nextPage,
+    data: {
+      courseId: params.get('courseId') || undefined,
+      lessonId: params.get('lessonId') || undefined,
+      quizId: params.get('quizId') || undefined
+    }
+  };
+}
+
+function replaceRouteHash(page, data) {
+  const nextHash = buildRouteHash(page, data);
+  if (window.location.hash !== nextHash) {
+    history.replaceState(null, '', nextHash);
+  }
 }
 
 function initDefaultData() {
@@ -1237,9 +1265,7 @@ function navigate(page, data) {
   if (!target) return;
   target.classList.add('active');
   currentPage = page;
-  if (window.location.hash !== `#${page}`) {
-    history.replaceState(null, '', `#${page}`);
-  }
+  replaceRouteHash(page, data);
 
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   const navMap = { home: 'home', courses: 'courses', 'quiz-list': 'quiz', about: 'about' };
@@ -1260,9 +1286,18 @@ function navigate(page, data) {
     renderAdmin();
   }
   if (page === 'quiz-list') renderQuizList();
-  if (page === 'lesson' && data) openLesson(data.courseId, data.lessonId);
-  if (page === 'quiz' && data) openQuiz(data.quizId);
-  if (page === 'certificate' && data) showCertificate(data.courseId);
+  if (page === 'lesson') {
+    const firstCourse = COURSES[0];
+    openLesson(data?.courseId || firstCourse?.id, data?.lessonId || firstCourse?.lessons?.[0]?.id);
+  }
+  if (page === 'quiz') {
+    if (data?.quizId) openQuiz(data.quizId);
+    else navigate('quiz-list');
+  }
+  if (page === 'certificate') {
+    if (data?.courseId) showCertificate(data.courseId);
+    else navigate('my-courses');
+  }
 }
 
 // ===== UPDATE NAV =====
@@ -1513,10 +1548,11 @@ function openCourseDetail(courseId) {
 
 // ===== LESSON =====
 function openLesson(courseId, lessonId) {
-  const course = COURSES.find(c => c.id === courseId);
+  const course = COURSES.find(c => String(c.id) === String(courseId));
   if (!course) return;
   currentCourse = course;
   currentLesson = course.lessons.find(l => l.id === lessonId) || course.lessons[0];
+  replaceRouteHash('lesson', { courseId: course.id, lessonId: currentLesson?.id });
 
   renderLessonSidebar();
   renderLessonContent();
@@ -1709,6 +1745,7 @@ function openQuiz(quizId) {
   currentQuiz = quiz;
   quizAnswers = {};
   quizSubmitted = false;
+  replaceRouteHash('quiz', { quizId: quiz.id });
   renderQuiz();
 }
 
@@ -2994,8 +3031,9 @@ function checkCourseCompletion(courseId) {
 
 function showCertificate(courseId) {
   const user = DB.currentUser;
-  const course = COURSES.find(c => c.id === courseId);
+  const course = COURSES.find(c => String(c.id) === String(courseId));
   if (!user || !course) { navigate('courses'); return; }
+  replaceRouteHash('certificate', { courseId: course.id });
 
   const container = document.getElementById('certificate-container');
   container.innerHTML = `
