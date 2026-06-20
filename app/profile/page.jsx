@@ -50,6 +50,10 @@ export default function ProfilePage() {
             <h2>{user.name}</h2>
             <p className="muted">@{user.username}</p>
             <p className="btn secondary">{user.role === 'admin' ? 'ผู้ดูแลระบบ' : 'ผู้เรียน'}</p>
+            <div className="actions">
+              <Link className="btn" href="/my-courses">บทเรียนของฉัน</Link>
+              <Link className="btn secondary" href="/learn">เรียนต่อ</Link>
+            </div>
             <button className="btn danger" onClick={logout}>ออกจากระบบ</button>
           </div>
           <div className="card">

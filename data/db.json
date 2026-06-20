@@ -4,8 +4,13 @@
       "id": "admin-001",
       "username": "admin",
       "password": "admin1234",
-      "name": "ผู้ดูแลระบบ",
-      "role": "admin"
+      "name": "???????????",
+      "firstname": "???????",
+      "lastname": "????",
+      "email": "admin@example.com",
+      "role": "admin",
+      "progress": {},
+      "quizResults": {}
     }
   ],
   "courses": [
@@ -13,14 +18,24 @@
       "id": 1,
       "unit": "หน่วยที่ 1",
       "title": "พื้นฐาน Back-End",
-      "desc": "เข้าใจ Client, Server, HTTP และ REST API",
+      "desc": "ทำความเข้าใจกับ Back-End คืออะไร การทำงานของ Server, Client และการสื่อสารผ่าน HTTP",
       "icon": "🖥️",
-      "videoUrl": "",
+      "color": "linear-gradient(135deg, #1a2a6c, #b21f1f)",
       "lessons": [
         {
           "id": "l1-1",
-          "title": "Back-End คืออะไร",
-          "content": "Back-End คือระบบเบื้องหลังที่รับ request ประมวลผล ติดต่อ database และส่ง response กลับไปให้ผู้ใช้"
+          "title": "Back-End คืออะไร?",
+          "content": "\n          <h3>🌐 Back-End Development คืออะไร?</h3>\n          <p>Back-End คือส่วนของระบบที่ทำงานอยู่เบื้องหลัง ผู้ใช้งานทั่วไปมองไม่เห็น แต่เป็นส่วนสำคัญที่ทำให้แอปพลิเคชันทำงานได้</p>\n          <ul>\n            <li><strong>Server:</strong> คอมพิวเตอร์หรือโปรแกรมที่รับและตอบสนองต่อ request</li>\n            <li><strong>Database:</strong> ที่จัดเก็บข้อมูลทั้งหมดของระบบ</li>\n            <li><strong>API:</strong> ช่องทางสื่อสารระหว่าง Front-End และ Back-End</li>\n          </ul>\n          <h3>⚙️ หน้าที่ของ Back-End Developer</h3>\n          <p>Back-End Developer รับผิดชอบในการสร้างและดูแลระบบต่างๆ ดังนี้:</p>\n          <ul>\n            <li>ออกแบบและพัฒนา API</li>\n            <li>จัดการฐานข้อมูล</li>\n            <li>ดูแลความปลอดภัยของระบบ</li>\n            <li>เพิ่มประสิทธิภาพการทำงานของ Server</li>\n          </ul>\n          <h3>📊 Stack ที่ใช้ในคอร์สนี้</h3>\n          <pre><code>Node.js (Runtime)\nExpress.js (Web Framework)\nMongoDB (Database)\nDocker (Container)\nAWS (Cloud Platform)</code></pre>\n        "
+        },
+        {
+          "id": "l1-2",
+          "title": "HTTP และ REST API",
+          "content": "\n          <h3>🔄 HTTP Protocol คืออะไร?</h3>\n          <p>HTTP (HyperText Transfer Protocol) คือโปรโตคอลที่ใช้ในการสื่อสารระหว่าง Client และ Server บนอินเทอร์เน็ต</p>\n          <h3>📨 HTTP Methods</h3>\n          <ul>\n            <li><code>GET</code> — ดึงข้อมูล (Read)</li>\n            <li><code>POST</code> — สร้างข้อมูลใหม่ (Create)</li>\n            <li><code>PUT/PATCH</code> — อัปเดตข้อมูล (Update)</li>\n            <li><code>DELETE</code> — ลบข้อมูล (Delete)</li>\n          </ul>\n          <h3>📡 REST API Design</h3>\n          <pre><code>GET    /users          → ดูผู้ใช้ทั้งหมด\nGET    /users/:id      → ดูผู้ใช้คนเดียว\nPOST   /users          → สร้างผู้ใช้ใหม่\nPUT    /users/:id      → อัปเดตข้อมูลผู้ใช้\nDELETE /users/:id      → ลบผู้ใช้</code></pre>\n          <h3>📬 HTTP Status Codes</h3>\n          <ul>\n            <li><code>200 OK</code> — สำเร็จ</li>\n            <li><code>201 Created</code> — สร้างสำเร็จ</li>\n            <li><code>400 Bad Request</code> — ข้อมูลไม่ถูกต้อง</li>\n            <li><code>401 Unauthorized</code> — ไม่ได้รับอนุญาต</li>\n            <li><code>404 Not Found</code> — ไม่พบข้อมูล</li>\n            <li><code>500 Internal Server Error</code> — Server มีปัญหา</li>\n          </ul>\n        "
+        },
+        {
+          "id": "l1-3",
+          "title": "Client-Server Architecture",
+          "content": "\n          <h3>🏗️ สถาปัตยกรรม Client-Server</h3>\n          <p>ในการพัฒนาเว็บ การสื่อสารจะเกิดขึ้นระหว่าง 2 ฝ่าย:</p>\n          <ul>\n            <li><strong>Client (Front-End):</strong> เบราว์เซอร์, มือถือ, แอปต่างๆ ที่ผู้ใช้โต้ตอบ</li>\n            <li><strong>Server (Back-End):</strong> เครื่องแม่ข่ายที่ประมวลผลและส่งข้อมูลกลับ</li>\n          </ul>\n          <h3>🔁 ขั้นตอนการทำงาน</h3>\n          <pre><code>1. Client ส่ง HTTP Request ไปที่ Server\n2. Server รับ request และประมวลผล\n3. Server อาจดึงข้อมูลจาก Database\n4. Server ส่ง HTTP Response กลับไป\n5. Client แสดงผลข้อมูลให้ผู้ใช้</code></pre>\n          <h3>🔒 Request vs Response</h3>\n          <p><strong>Request</strong> ประกอบด้วย:</p>\n          <ul>\n            <li>Method (GET, POST, etc.)</li>\n            <li>URL / Endpoint</li>\n            <li>Headers (metadata)</li>\n            <li>Body (ข้อมูลที่ส่งมา)</li>\n          </ul>\n          <p><strong>Response</strong> ประกอบด้วย:</p>\n          <ul>\n            <li>Status Code (200, 404, etc.)</li>\n            <li>Headers</li>\n            <li>Body (ข้อมูลที่ส่งกลับ)</li>\n          </ul>\n          <h3>📦 ตัวอย่าง JSON Response</h3>\n          <pre><code>{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"สมชาย\",\n    \"email\": \"somchai@example.com\"\n  }\n}</code></pre>\n        "
         }
       ]
     },
@@ -28,74 +43,124 @@
       "id": 2,
       "unit": "หน่วยที่ 2",
       "title": "Node.js และ Express",
-      "desc": "สร้าง Web Server และ REST API ด้วย JavaScript",
+      "desc": "ติดตั้งและสร้าง Web Server ด้วย Node.js พร้อมใช้งาน Express Framework สร้าง REST API",
       "icon": "⚡",
-      "videoUrl": "",
+      "color": "linear-gradient(135deg, #0f3443, #34e89e)",
       "lessons": [
         {
           "id": "l2-1",
-          "title": "สร้าง Server แรก",
-          "content": "ใช้ Node.js และ Express เพื่อสร้าง API endpoint และ middleware"
+          "title": "ติดตั้ง Node.js และ Express",
+          "content": "\n          <h3>📦 การติดตั้ง Node.js</h3>\n          <p>ดาวน์โหลด Node.js จาก <code>nodejs.org</code> และทำการติดตั้ง หลังจากนั้นตรวจสอบด้วยคำสั่ง:</p>\n          <pre><code>node --version   # v20.x.x\nnpm --version    # 10.x.x</code></pre>\n          <h3>🚀 สร้างโปรเจค Express</h3>\n          <pre><code>mkdir my-server\ncd my-server\nnpm init -y\nnpm install express</code></pre>\n          <h3>💻 Server แรกของเรา</h3>\n          <pre><code>// server.js\nconst express = require('express');\nconst app = express();\n\napp.use(express.json());\n\napp.get('/', (req, res) => {\n  res.json({ message: 'สวัสดี Backend! 🚀' });\n});\n\napp.listen(3000, () => {\n  console.log('Server กำลังทำงานที่ port 3000');\n});</code></pre>\n          <h3>▶️ รัน Server</h3>\n          <pre><code>node server.js</code></pre>\n          <p>เปิด browser ไปที่ <code>http://localhost:3000</code> จะเห็น JSON response ของเรา!</p>\n        "
+        },
+        {
+          "id": "l2-2",
+          "title": "Routing และ Middleware",
+          "content": "\n          <h3>🗺️ Express Routing</h3>\n          <p>Routing คือการกำหนดว่า Server จะตอบสนองอย่างไรเมื่อได้รับ request ที่ URL และ Method ต่างๆ</p>\n          <pre><code>// routes/users.js\nconst router = require('express').Router();\n\nrouter.get('/', (req, res) => {\n  res.json({ users: [] });\n});\n\nrouter.post('/', (req, res) => {\n  const { name, email } = req.body;\n  res.status(201).json({ id: 1, name, email });\n});\n\nmodule.exports = router;</code></pre>\n          <h3>🔧 Middleware</h3>\n          <p>Middleware คือฟังก์ชันที่ทำงานก่อน Request ถึง Route Handler</p>\n          <pre><code>// Logging middleware\nconst logger = (req, res, next) => {\n  console.log(`${req.method} ${req.path} - ${new Date()}`);\n  next(); // ส่งต่อไปยัง middleware ถัดไป\n};\n\napp.use(logger);</code></pre>\n          <h3>🛡️ Auth Middleware</h3>\n          <pre><code>const authMiddleware = (req, res, next) => {\n  const token = req.headers.authorization;\n  if (!token) {\n    return res.status(401).json({ error: 'No token' });\n  }\n  // ตรวจสอบ token\n  next();\n};\n\napp.use('/api/protected', authMiddleware);</code></pre>\n        "
+        },
+        {
+          "id": "l2-3",
+          "title": "Error Handling และ Validation",
+          "content": "\n          <h3>⚠️ Error Handling ใน Express</h3>\n          <p>การจัดการ Error ที่ดีจะทำให้ระบบมีความเสถียรและง่ายต่อการ debug</p>\n          <pre><code>// Global Error Handler\napp.use((err, req, res, next) => {\n  console.error(err.stack);\n  res.status(err.status || 500).json({\n    error: {\n      message: err.message,\n      status: err.status || 500\n    }\n  });\n});</code></pre>\n          <h3>📝 Custom Error Class</h3>\n          <pre><code>class AppError extends Error {\n  constructor(message, status) {\n    super(message);\n    this.status = status;\n  }\n}\n\n// ใช้งาน\napp.get('/user/:id', (req, res, next) => {\n  const user = users.find(u => u.id === req.params.id);\n  if (!user) {\n    return next(new AppError('ไม่พบผู้ใช้', 404));\n  }\n  res.json(user);\n});</code></pre>\n          <h3>✅ Input Validation</h3>\n          <pre><code>// ตรวจสอบข้อมูลก่อนบันทึก\napp.post('/users', (req, res) => {\n  const { name, email, password } = req.body;\n  \n  const errors = [];\n  if (!name) errors.push('กรุณาระบุชื่อ');\n  if (!email) errors.push('กรุณาระบุอีเมล');\n  if (!password || password.length < 6)\n    errors.push('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร');\n  \n  if (errors.length > 0) {\n    return res.status(400).json({ errors });\n  }\n  \n  // บันทึกข้อมูล...\n});</code></pre>\n        "
         }
       ]
     },
     {
       "id": 3,
       "unit": "หน่วยที่ 3",
-      "title": "MongoDB",
-      "desc": "จัดการข้อมูลแบบ Document และ CRUD",
+      "title": "ฐานข้อมูลด้วย MongoDB",
+      "desc": "เรียนรู้การใช้งาน MongoDB ทั้ง CRUD Operations, Schema Design และการเชื่อมต่อกับ Express",
       "icon": "🍃",
-      "videoUrl": "",
+      "color": "linear-gradient(135deg, #1a472a, #52c234)",
       "lessons": [
         {
           "id": "l3-1",
-          "title": "รู้จัก MongoDB",
-          "content": "MongoDB เป็น NoSQL database ที่เก็บข้อมูลเป็น document คล้าย JSON"
+          "title": "รู้จักกับ MongoDB",
+          "content": "\n          <h3>🍃 MongoDB คืออะไร?</h3>\n          <p>MongoDB คือ NoSQL Database ที่เก็บข้อมูลในรูปแบบ Document (JSON-like) แทนที่จะเป็น Table แบบ SQL</p>\n          <h3>📊 เปรียบเทียบ SQL vs MongoDB</h3>\n          <ul>\n            <li>SQL: <code>Table</code> → MongoDB: <code>Collection</code></li>\n            <li>SQL: <code>Row</code> → MongoDB: <code>Document</code></li>\n            <li>SQL: <code>Column</code> → MongoDB: <code>Field</code></li>\n          </ul>\n          <h3>🔌 เชื่อมต่อกับ Mongoose</h3>\n          <pre><code>npm install mongoose</code></pre>\n          <pre><code>const mongoose = require('mongoose');\n\nmongoose.connect('mongodb://localhost:27017/mydb')\n  .then(() => console.log('✅ MongoDB connected'))\n  .catch(err => console.error(err));</code></pre>\n          <h3>📋 Schema และ Model</h3>\n          <pre><code>const userSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  email: { type: String, required: true, unique: true },\n  password: String,\n  createdAt: { type: Date, default: Date.now }\n});\n\nconst User = mongoose.model('User', userSchema);</code></pre>\n        "
+        },
+        {
+          "id": "l3-2",
+          "title": "CRUD Operations",
+          "content": "\n          <h3>📝 CRUD คืออะไร?</h3>\n          <p>CRUD ย่อมาจาก Create, Read, Update, Delete — เป็นการดำเนินการพื้นฐานกับข้อมูล</p>\n          <h3>➕ Create — สร้างข้อมูล</h3>\n          <pre><code>// สร้างผู้ใช้ใหม่\nconst newUser = new User({\n  name: 'สมชาย',\n  email: 'somchai@email.com',\n  password: 'hashed_password'\n});\nawait newUser.save();\n\n// หรือใช้ create()\nconst user = await User.create({\n  name: 'สมหญิง',\n  email: 'somying@email.com'\n});</code></pre>\n          <h3>📖 Read — อ่านข้อมูล</h3>\n          <pre><code>// ดึงทั้งหมด\nconst users = await User.find();\n\n// ดึงตามเงื่อนไข\nconst admins = await User.find({ role: 'admin' });\n\n// ดึงคนเดียว\nconst user = await User.findById(id);\nconst user2 = await User.findOne({ email: 'test@email.com' });</code></pre>\n          <h3>✏️ Update — อัปเดตข้อมูล</h3>\n          <pre><code>await User.findByIdAndUpdate(id, {\n  name: 'ชื่อใหม่'\n}, { new: true }); // new: true คืนค่าที่อัปเดตแล้ว</code></pre>\n          <h3>🗑️ Delete — ลบข้อมูล</h3>\n          <pre><code>await User.findByIdAndDelete(id);\n\n// ลบหลายรายการ\nawait User.deleteMany({ role: 'inactive' });</code></pre>\n        "
+        },
+        {
+          "id": "l3-3",
+          "title": "Schema Design & Relations",
+          "content": "\n          <h3>🏗️ การออกแบบ Schema ที่ดี</h3>\n          <p>การออกแบบ Schema ที่ดีจะส่งผลต่อประสิทธิภาพและความยืดหยุ่นของระบบ</p>\n          <h3>📐 Schema Options</h3>\n          <pre><code>const productSchema = new mongoose.Schema({\n  name: {\n    type: String,\n    required: [true, 'กรุณาระบุชื่อสินค้า'],\n    trim: true,\n    maxlength: 100\n  },\n  price: {\n    type: Number,\n    required: true,\n    min: [0, 'ราคาต้องมากกว่า 0']\n  },\n  category: {\n    type: String,\n    enum: ['electronics', 'clothing', 'food'],\n    default: 'electronics'\n  },\n  tags: [String],\n  inStock: { type: Boolean, default: true }\n}, {\n  timestamps: true // สร้าง createdAt, updatedAt อัตโนมัติ\n});</code></pre>\n          <h3>🔗 Relations — Populate</h3>\n          <pre><code>// Order อ้างอิงถึง User\nconst orderSchema = new mongoose.Schema({\n  user: {\n    type: mongoose.Schema.Types.ObjectId,\n    ref: 'User',\n    required: true\n  },\n  products: [{\n    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },\n    quantity: Number\n  }],\n  totalPrice: Number\n});\n\n// ดึงข้อมูลพร้อม populate\nconst order = await Order.findById(id)\n  .populate('user', 'name email')\n  .populate('products.product', 'name price');</code></pre>\n          <h3>📌 Indexing — เพิ่มความเร็ว</h3>\n          <pre><code>// สร้าง index\nuserSchema.index({ email: 1 });           // single\nproductSchema.index({ name: 1, price: -1 }); // compound\nproductSchema.index({ name: 'text' });     // text search</code></pre>\n        "
         }
       ]
     },
     {
       "id": 4,
       "unit": "หน่วยที่ 4",
-      "title": "Authentication และ JWT",
-      "desc": "สร้างระบบสมัครสมาชิก เข้าสู่ระบบ และจัดการสิทธิ์",
+      "title": "Authentication & JWT",
+      "desc": "ระบบยืนยันตัวตนด้วย JWT Token, bcrypt, Session Management และการรักษาความปลอดภัย",
       "icon": "🔐",
-      "videoUrl": "",
+      "color": "linear-gradient(135deg, #2c1654, #7b5ef8)",
       "lessons": [
         {
           "id": "l4-1",
-          "title": "Login และ Token",
-          "content": "ใช้ bcrypt hash password และใช้ JWT เพื่อยืนยันตัวตนหลังเข้าสู่ระบบ"
+          "title": "JWT Authentication",
+          "content": "\n          <h3>🔐 JSON Web Token (JWT)</h3>\n          <p>JWT คือมาตรฐานสำหรับการส่ง claim ระหว่าง parties อย่างปลอดภัย ประกอบด้วย 3 ส่วน:</p>\n          <ul>\n            <li><strong>Header:</strong> ระบุ algorithm ที่ใช้</li>\n            <li><strong>Payload:</strong> ข้อมูล user</li>\n            <li><strong>Signature:</strong> ลายเซ็นยืนยัน</li>\n          </ul>\n          <pre><code>npm install jsonwebtoken bcryptjs</code></pre>\n          <h3>🔑 สร้างและยืนยัน Token</h3>\n          <pre><code>const jwt = require('jsonwebtoken');\nconst bcrypt = require('bcryptjs');\n\n// Register\nconst hashedPassword = await bcrypt.hash(password, 10);\n\n// Login\nconst isValid = await bcrypt.compare(password, hashedPassword);\nconst token = jwt.sign(\n  { userId: user._id },\n  process.env.JWT_SECRET,\n  { expiresIn: '7d' }\n);\n\n// Verify\nconst decoded = jwt.verify(token, process.env.JWT_SECRET);</code></pre>\n        "
+        },
+        {
+          "id": "l4-2",
+          "title": "Password Hashing & Security",
+          "content": "\n          <h3>🔒 ทำไมต้อง Hash รหัสผ่าน?</h3>\n          <p>การเก็บรหัสผ่านแบบ plain text อันตรายมาก ถ้าข้อมูลรั่วไหล ผู้ใช้ทุกคนจะถูกเข้าถึงได้ทันที</p>\n          <h3>🧂 bcrypt กับ Salt</h3>\n          <pre><code>const bcrypt = require('bcryptjs');\n\n// Hash password พร้อม salt rounds\nconst salt = await bcrypt.genSalt(12);\nconst hashedPassword = await bcrypt.hash('mypassword', salt);\n\n// ตรวจสอบ password\nconst isMatch = await bcrypt.compare('mypassword', hashedPassword);\n// isMatch = true</code></pre>\n          <h3>🛡️ Security Best Practices</h3>\n          <ul>\n            <li>ไม่เก็บ password แบบ plain text</li>\n            <li>ใช้ <code>salt rounds</code> ≥ 10</li>\n            <li>ใช้ HTTPS เสมอ</li>\n            <li>กำหนด <code>expiresIn</code> ให้ token</li>\n            <li>ใช้ <code>httpOnly</code> cookie สำหรับ token</li>\n            <li>เก็บ secret ใน environment variables</li>\n          </ul>\n          <h3>🔐 Helmet — HTTP Security Headers</h3>\n          <pre><code>const helmet = require('helmet');\napp.use(helmet());\n\n// ป้องกัน:\n// - XSS attacks\n// - Clickjacking\n// - MIME sniffing\n// - และอื่นๆ</code></pre>\n          <h3>📝 Rate Limiting</h3>\n          <pre><code>const rateLimit = require('express-rate-limit');\n\nconst limiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 นาที\n  max: 100 // จำกัด 100 requests ต่อ IP\n});\n\napp.use('/api/', limiter);</code></pre>\n        "
+        },
+        {
+          "id": "l4-3",
+          "title": "Role-Based Access Control",
+          "content": "\n          <h3>👥 RBAC คืออะไร?</h3>\n          <p>Role-Based Access Control (RBAC) คือการจำกัดสิทธิ์การเข้าถึงตาม role ของผู้ใช้</p>\n          <h3>🏷️ ตัวอย่าง Roles</h3>\n          <pre><code>const ROLES = {\n  USER: 'user',\n  ADMIN: 'admin',\n  MODERATOR: 'moderator'\n};\n\nconst userSchema = new mongoose.Schema({\n  username: String,\n  password: String,\n  role: {\n    type: String,\n    enum: Object.values(ROLES),\n    default: ROLES.USER\n  }\n});</code></pre>\n          <h3>🔒 Authorization Middleware</h3>\n          <pre><code>const authorize = (...roles) => {\n  return (req, res, next) => {\n    if (!roles.includes(req.user.role)) {\n      return res.status(403).json({\n        error: 'ไม่มีสิทธิ์เข้าถึง'\n      });\n    }\n    next();\n  };\n};\n\n// ใช้งาน\napp.delete('/users/:id',\n  authMiddleware,\n  authorize('admin'),\n  deleteUser\n);\n\napp.put('/posts/:id',\n  authMiddleware,\n  authorize('admin', 'moderator'),\n  updatePost\n);</code></pre>\n          <h3>📋 Permissions Matrix</h3>\n          <pre><code>const permissions = {\n  user:      ['read:own', 'update:own'],\n  moderator: ['read:any', 'update:any', 'delete:own'],\n  admin:     ['read:any', 'create:any', 'update:any', 'delete:any']\n};</code></pre>\n        "
         }
       ]
     },
     {
       "id": 5,
       "unit": "หน่วยที่ 5",
-      "title": "Docker",
-      "desc": "แพ็กแอปเป็น Container เพื่อรันได้ทุกที่",
+      "title": "Docker & Containerization",
+      "desc": "เรียนรู้การใช้ Docker สร้าง Container, เขียน Dockerfile และจัดการ Services ด้วย Docker Compose",
       "icon": "🐳",
-      "videoUrl": "",
+      "color": "linear-gradient(135deg, #0d2137, #2196f3)",
       "lessons": [
         {
           "id": "l5-1",
-          "title": "Dockerfile",
-          "content": "Dockerfile ใช้กำหนดขั้นตอนสร้าง image สำหรับรันแอป"
+          "title": "Docker คืออะไร?",
+          "content": "\n          <h3>🐳 Docker คืออะไร?</h3>\n          <p>Docker คือแพลตฟอร์มสำหรับสร้าง, ทดสอบ และ deploy แอปพลิเคชันในรูปแบบ Container ที่แยกเป็นหน่วยอิสระ</p>\n          <h3>📦 Container vs Virtual Machine</h3>\n          <ul>\n            <li><strong>Container:</strong> เบา, เร็ว, แชร์ OS Kernel — เริ่มต้นภายในวินาที</li>\n            <li><strong>VM:</strong> หนัก, ช้ากว่า, มี OS แยกของตัวเอง — ใช้เวลานาทีในการเริ่ม</li>\n          </ul>\n          <h3>🧩 คำศัพท์สำคัญ</h3>\n          <ul>\n            <li><code>Image</code> — เทมเพลตที่ใช้สร้าง Container (เหมือนแบบบ้าน)</li>\n            <li><code>Container</code> — instance ที่รันจาก Image (เหมือนตัวบ้านจริง)</li>\n            <li><code>Dockerfile</code> — สคริปต์สำหรับสร้าง Image</li>\n            <li><code>Registry</code> — ที่เก็บ Images (เช่น Docker Hub)</li>\n          </ul>\n          <h3>⚡ คำสั่งพื้นฐาน</h3>\n          <pre><code># ดาวน์โหลด image\ndocker pull node:20-alpine\n\n# ดู images ทั้งหมด\ndocker images\n\n# รัน container\ndocker run -d -p 3000:3000 --name myapp node:20\n\n# ดู containers ที่กำลังทำงาน\ndocker ps\n\n# หยุด container\ndocker stop myapp\n\n# ลบ container\ndocker rm myapp</code></pre>\n        "
+        },
+        {
+          "id": "l5-2",
+          "title": "เขียน Dockerfile",
+          "content": "\n          <h3>📄 Dockerfile คืออะไร?</h3>\n          <p>Dockerfile คือไฟล์ที่กำหนดขั้นตอนการสร้าง Docker Image — เหมือน recipe สำหรับการเตรียมสภาพแวดล้อม</p>\n          <h3>🛠️ Dockerfile สำหรับ Node.js</h3>\n          <pre><code># ใช้ Node.js image เป็นฐาน\nFROM node:20-alpine\n\n# กำหนด working directory\nWORKDIR /app\n\n# คัดลอก package files ก่อน (สำหรับ caching)\nCOPY package*.json ./\n\n# ติดตั้ง dependencies\nRUN npm ci --only=production\n\n# คัดลอกโค้ดทั้งหมด\nCOPY . .\n\n# เปิด port\nEXPOSE 3000\n\n# คำสั่งรัน\nCMD [\"node\", \"server.js\"]</code></pre>\n          <h3>🚫 .dockerignore</h3>\n          <pre><code>node_modules\nnpm-debug.log\n.git\n.env\nDockerfile\ndocker-compose.yml\nREADME.md</code></pre>\n          <h3>🏗️ Build และ Run</h3>\n          <pre><code># Build image\ndocker build -t my-api:1.0 .\n\n# รันจาก image ที่สร้าง\ndocker run -d -p 3000:3000 \\\n  --name my-api \\\n  -e NODE_ENV=production \\\n  my-api:1.0</code></pre>\n          <h3>🔍 Multi-stage Build</h3>\n          <pre><code># Stage 1: Build\nFROM node:20 AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nRUN npm run build\n\n# Stage 2: Production\nFROM node:20-alpine\nWORKDIR /app\nCOPY --from=builder /app/dist ./dist\nCOPY package*.json ./\nRUN npm ci --only=production\nEXPOSE 3000\nCMD [\"node\", \"dist/server.js\"]</code></pre>\n        "
+        },
+        {
+          "id": "l5-3",
+          "title": "Docker Compose",
+          "content": "\n          <h3>🎼 Docker Compose คืออะไร?</h3>\n          <p>Docker Compose ใช้สำหรับจัดการ multi-container application — เช่น app + database + cache ในคำสั่งเดียว</p>\n          <h3>📝 docker-compose.yml</h3>\n          <pre><code>version: '3.8'\n\nservices:\n  # Node.js API\n  api:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      - NODE_ENV=production\n      - MONGO_URI=mongodb://mongo:27017/mydb\n      - REDIS_URL=redis://redis:6379\n    depends_on:\n      - mongo\n      - redis\n    restart: unless-stopped\n\n  # MongoDB\n  mongo:\n    image: mongo:7\n    ports:\n      - \"27017:27017\"\n    volumes:\n      - mongo-data:/data/db\n    restart: unless-stopped\n\n  # Redis Cache\n  redis:\n    image: redis:7-alpine\n    ports:\n      - \"6379:6379\"\n    restart: unless-stopped\n\nvolumes:\n  mongo-data:</code></pre>\n          <h3>⚡ คำสั่ง Docker Compose</h3>\n          <pre><code># เริ่มทุก services\ndocker compose up -d\n\n# ดู logs\ndocker compose logs -f api\n\n# หยุดทั้งหมด\ndocker compose down\n\n# หยุดและลบ volumes\ndocker compose down -v\n\n# สร้างใหม่\ndocker compose up -d --build</code></pre>\n        "
         }
       ]
     },
     {
       "id": 6,
       "unit": "หน่วยที่ 6",
-      "title": "Deploy และ CI/CD",
-      "desc": "นำแอปขึ้น Cloud และทำ Pipeline อัตโนมัติ",
+      "title": "Cloud Deployment (AWS)",
+      "desc": "เรียนรู้การ Deploy แอปพลิเคชันขึ้น AWS Cloud ด้วย EC2, S3, RDS และ CI/CD Pipeline",
       "icon": "☁️",
-      "videoUrl": "",
+      "color": "linear-gradient(135deg, #1a1a2e, #e94560)",
       "lessons": [
         {
           "id": "l6-1",
-          "title": "Deploy Production",
-          "content": "ใช้ Docker, environment variables และ CI/CD เพื่อ deploy แอปอย่างเป็นระบบ"
+          "title": "รู้จักกับ AWS",
+          "content": "\n          <h3>☁️ Amazon Web Services (AWS)</h3>\n          <p>AWS เป็น Cloud Platform ที่ใหญ่ที่สุดในโลก มีบริการมากกว่า 200 รายการ</p>\n          <h3>🧱 บริการหลักที่ใช้บ่อย</h3>\n          <ul>\n            <li><strong>EC2:</strong> Virtual Server — เครื่อง server ในคลาวด์</li>\n            <li><strong>S3:</strong> Object Storage — เก็บไฟล์, รูปภาพ, backup</li>\n            <li><strong>RDS:</strong> Managed Database — ฐานข้อมูลที่จัดการให้</li>\n            <li><strong>Lambda:</strong> Serverless Functions — รันโค้ดโดยไม่ต้องจัดการ server</li>\n            <li><strong>ECS/EKS:</strong> Container Services — รัน Docker containers</li>\n            <li><strong>CloudFront:</strong> CDN — กระจาย content ทั่วโลก</li>\n          </ul>\n          <h3>🔑 AWS CLI</h3>\n          <pre><code># ติดตั้ง AWS CLI\npip install awscli\n\n# ตั้งค่า credentials\naws configure\n# AWS Access Key ID: AKIA...\n# AWS Secret Access Key: xxxxx\n# Default region: ap-southeast-1\n# Default output format: json</code></pre>\n          <h3>💰 ค่าใช้จ่าย</h3>\n          <p>AWS มี Free Tier สำหรับผู้เริ่มต้น 12 เดือนแรก:</p>\n          <ul>\n            <li>EC2: t2.micro 750 ชม./เดือน</li>\n            <li>S3: 5 GB storage</li>\n            <li>RDS: t2.micro 750 ชม./เดือน</li>\n            <li>Lambda: 1 ล้าน requests/เดือน</li>\n          </ul>\n        "
+        },
+        {
+          "id": "l6-2",
+          "title": "Deploy ด้วย EC2",
+          "content": "\n          <h3>🖥️ สร้าง EC2 Instance</h3>\n          <p>EC2 (Elastic Compute Cloud) คือบริการ Virtual Server ใน AWS</p>\n          <h3>📋 ขั้นตอนการ Deploy</h3>\n          <pre><code># 1. SSH เข้า EC2\nssh -i \"my-key.pem\" ec2-user@ec2-xxx.amazonaws.com\n\n# 2. ติดตั้ง Node.js\ncurl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -\nsudo yum install -y nodejs\n\n# 3. ติดตั้ง PM2 (Process Manager)\nsudo npm install -g pm2\n\n# 4. Clone โปรเจค\ngit clone https://github.com/user/my-api.git\ncd my-api\n\n# 5. ติดตั้ง dependencies\nnpm ci --production\n\n# 6. รัน ด้วย PM2\npm2 start server.js --name \"my-api\"\npm2 save\npm2 startup</code></pre>\n          <h3>🌐 Nginx Reverse Proxy</h3>\n          <pre><code># /etc/nginx/conf.d/myapp.conf\nserver {\n    listen 80;\n    server_name api.example.com;\n\n    location / {\n        proxy_pass http://localhost:3000;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection 'upgrade';\n        proxy_set_header Host $host;\n        proxy_cache_bypass $http_upgrade;\n    }\n}</code></pre>\n          <h3>🔒 SSL Certificate</h3>\n          <pre><code># ใช้ Let's Encrypt (ฟรี)\nsudo yum install certbot python3-certbot-nginx\nsudo certbot --nginx -d api.example.com</code></pre>\n        "
+        },
+        {
+          "id": "l6-3",
+          "title": "CI/CD Pipeline",
+          "content": "\n          <h3>🔄 CI/CD คืออะไร?</h3>\n          <p><strong>CI (Continuous Integration)</strong> — รวมโค้ด, ทดสอบ, build อัตโนมัติ</p>\n          <p><strong>CD (Continuous Deployment)</strong> — deploy ขึ้น production อัตโนมัติ</p>\n          <h3>📝 GitHub Actions</h3>\n          <pre><code># .github/workflows/deploy.yml\nname: Deploy to EC2\n\non:\n  push:\n    branches: [main]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n      - run: npm ci\n      - run: npm test\n\n  deploy:\n    needs: test\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - name: Deploy to EC2\n        uses: appleboy/ssh-action@v1\n        with:\n          host: ${{ secrets.EC2_HOST }}\n          username: ec2-user\n          key: ${{ secrets.EC2_KEY }}\n          script: |\n            cd /app/my-api\n            git pull origin main\n            npm ci --production\n            pm2 restart my-api</code></pre>\n          <h3>🐳 Docker + CI/CD</h3>\n          <pre><code># Build และ Push Docker image ไป ECR\n- name: Build Docker Image\n  run: docker build -t my-api:latest .\n\n- name: Push to ECR\n  run: |\n    aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REGISTRY\n    docker tag my-api:latest $ECR_REGISTRY/my-api:latest\n    docker push $ECR_REGISTRY/my-api:latest</code></pre>\n          <h3>✅ สรุป Flow</h3>\n          <pre><code>Developer Push Code\n      ↓\nGitHub Actions Triggered\n      ↓\nRun Tests (npm test)\n      ↓\nBuild Docker Image\n      ↓\nPush to Registry (ECR)\n      ↓\nDeploy to EC2/ECS\n      ↓\n🎉 Live on Production!</code></pre>\n        "
         }
       ]
     }
@@ -105,14 +170,767 @@
       "id": "q1-pre",
       "courseId": 1,
       "type": "pre",
-      "title": "แบบทดสอบก่อนเรียน หน่วยที่ 1",
-      "desc": "ทดสอบความรู้พื้นฐานก่อนเรียน",
+      "title": "แบบทดสอบก่อนเรียน (หน่วยที่ 1)",
+      "desc": "ทดสอบความรู้พื้นฐานก่อนเรียน Back-End",
       "questions": [
         {
           "id": 1,
-          "question": "Back-End ทำงานอยู่ฝั่งใด",
-          "options": ["Client", "Server", "CSS", "Browser UI"],
+          "question": "Back-End คือส่วนใดของระบบ?",
+          "options": [
+            "ส่วนที่ผู้ใช้เห็นและโต้ตอบด้วย",
+            "ส่วนที่ทำงานเบื้องหลัง ผู้ใช้มองไม่เห็น",
+            "ส่วนของการออกแบบ UI",
+            "ส่วนของการทำ animation"
+          ],
           "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "HTTP Method ใดที่ใช้สำหรับ \"ดึงข้อมูล\"?",
+          "options": [
+            "POST",
+            "PUT",
+            "GET",
+            "DELETE"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 3,
+          "question": "API ย่อมาจากอะไร?",
+          "options": [
+            "Application Programming Interface",
+            "Application Process Integration",
+            "Automated Program Interface",
+            "Advanced Programming Interface"
+          ],
+          "correct": 0
+        },
+        {
+          "id": 4,
+          "question": "HTTP Status Code 404 หมายความว่าอะไร?",
+          "options": [
+            "สำเร็จ",
+            "Server Error",
+            "ไม่พบข้อมูล",
+            "ไม่ได้รับอนุญาต"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 5,
+          "question": "Database ที่เก็บข้อมูลในรูปแบบ Document เรียกว่า?",
+          "options": [
+            "SQL Database",
+            "Relational Database",
+            "NoSQL Database",
+            "Graph Database"
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "q1-post",
+      "courseId": 1,
+      "type": "post",
+      "title": "แบบทดสอบหลังเรียน (หน่วยที่ 1)",
+      "desc": "ทบทวนความรู้หลังเรียนหน่วยที่ 1",
+      "questions": [
+        {
+          "id": 1,
+          "question": "REST API ย่อมาจากอะไร?",
+          "options": [
+            "Representational State Transfer",
+            "Remote Server Transfer",
+            "Request Server Technology",
+            "Real State Transfer"
+          ],
+          "correct": 0
+        },
+        {
+          "id": 2,
+          "question": "HTTP Method POST ใช้สำหรับ?",
+          "options": [
+            "ดึงข้อมูล",
+            "ลบข้อมูล",
+            "สร้างข้อมูลใหม่",
+            "อัปเดตข้อมูล"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 3,
+          "question": "HTTP Status Code 201 หมายความว่าอะไร?",
+          "options": [
+            "ไม่พบข้อมูล",
+            "สร้างข้อมูลสำเร็จ",
+            "Server Error",
+            "Bad Request"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "JSON ย่อมาจากอะไร?",
+          "options": [
+            "JavaScript Object Notation",
+            "Java Server Object Node",
+            "JavaScript Oriented Notation",
+            "JSON Script Object"
+          ],
+          "correct": 0
+        },
+        {
+          "id": 5,
+          "question": "Header ใดที่ใช้ส่ง Token ใน Request?",
+          "options": [
+            "Content-Type",
+            "Authorization",
+            "Accept",
+            "X-Custom-Header"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q2-pre",
+      "courseId": 2,
+      "type": "pre",
+      "title": "แบบทดสอบก่อนเรียน (หน่วยที่ 2)",
+      "desc": "ทดสอบความรู้เรื่อง Node.js และ Express",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Node.js คืออะไร?",
+          "options": [
+            "Web Browser",
+            "JavaScript Runtime บน Server",
+            "Database",
+            "CSS Framework"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "npm ย่อมาจากอะไร?",
+          "options": [
+            "Node Package Manager",
+            "Node Process Module",
+            "New Program Manager",
+            "Network Package Module"
+          ],
+          "correct": 0
+        },
+        {
+          "id": 3,
+          "question": "Express.js ใช้สำหรับ?",
+          "options": [
+            "ออกแบบ UI",
+            "สร้าง Web Server และ API",
+            "จัดการ Database",
+            "ทดสอบโค้ด"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "Middleware ใน Express คืออะไร?",
+          "options": [
+            "ฐานข้อมูล",
+            "ฟังก์ชันที่ทำงานก่อน Route Handler",
+            "Template Engine",
+            "CSS Preprocessor"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "Port เริ่มต้นที่นิยมใช้ใน Development คือ?",
+          "options": [
+            "80",
+            "443",
+            "3000",
+            "8080"
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "q2-post",
+      "courseId": 2,
+      "type": "post",
+      "title": "แบบทดสอบหลังเรียน (หน่วยที่ 2)",
+      "desc": "ทบทวนความรู้เรื่อง Node.js และ Express",
+      "questions": [
+        {
+          "id": 1,
+          "question": "คำสั่งใดใช้สร้างโปรเจค Node.js ใหม่?",
+          "options": [
+            "node init",
+            "npm init",
+            "npm create",
+            "node new"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "app.use() ใช้ทำอะไร?",
+          "options": [
+            "สร้าง route",
+            "ลงทะเบียน middleware",
+            "เชื่อมต่อ database",
+            "เริ่มต้น server"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "next() ใน middleware ทำหน้าที่อะไร?",
+          "options": [
+            "หยุด request",
+            "ส่ง response",
+            "ส่งต่อไป middleware/route ถัดไป",
+            "ลบ request"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 4,
+          "question": "req.body ใช้ดึงข้อมูลจาก?",
+          "options": [
+            "URL parameter",
+            "Query string",
+            "Request body (POST data)",
+            "Headers"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 5,
+          "question": "Status Code 400 หมายถึง?",
+          "options": [
+            "Success",
+            "Not Found",
+            "Bad Request",
+            "Internal Server Error"
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "q3-pre",
+      "courseId": 3,
+      "type": "pre",
+      "title": "แบบทดสอบก่อนเรียน (หน่วยที่ 3)",
+      "desc": "ทดสอบความรู้เรื่อง MongoDB",
+      "questions": [
+        {
+          "id": 1,
+          "question": "MongoDB จัดอยู่ในประเภท?",
+          "options": [
+            "SQL Database",
+            "NoSQL Database",
+            "Graph Database",
+            "Time-series Database"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "ใน MongoDB \"Collection\" เทียบเท่ากับอะไรใน SQL?",
+          "options": [
+            "Database",
+            "Table",
+            "Column",
+            "Row"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "CRUD ย่อมาจากอะไร?",
+          "options": [
+            "Create Read Update Delete",
+            "Copy Read Upload Delete",
+            "Create Run Update Deploy",
+            "Connect Read Use Delete"
+          ],
+          "correct": 0
+        },
+        {
+          "id": 4,
+          "question": "Mongoose คืออะไร?",
+          "options": [
+            "Web Framework",
+            "Testing Library",
+            "ODM สำหรับ MongoDB",
+            "CSS Framework"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 5,
+          "question": "JSON เก็บข้อมูลในรูปแบบ?",
+          "options": [
+            "Table",
+            "Key-Value pairs",
+            "Rows & Columns",
+            "Binary"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q3-post",
+      "courseId": 3,
+      "type": "post",
+      "title": "แบบทดสอบหลังเรียน (หน่วยที่ 3)",
+      "desc": "ทบทวนความรู้เรื่อง MongoDB",
+      "questions": [
+        {
+          "id": 1,
+          "question": "คำสั่งใดใช้ค้นหา document ทั้งหมด?",
+          "options": [
+            "Model.findAll()",
+            "Model.find()",
+            "Model.search()",
+            "Model.getAll()"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "populate() ใช้ทำอะไร?",
+          "options": [
+            "สร้างข้อมูลจำลอง",
+            "ดึงข้อมูลที่อ้างอิง (reference) มาด้วย",
+            "ลบข้อมูลทั้งหมด",
+            "สร้าง index"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "Option { new: true } ใน findByIdAndUpdate ทำอะไร?",
+          "options": [
+            "สร้าง document ใหม่",
+            "คืนค่า document ที่อัปเดตแล้ว",
+            "ลบ document เก่า",
+            "สร้าง collection ใหม่"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "Index ใน MongoDB ใช้เพื่อ?",
+          "options": [
+            "เพิ่มความปลอดภัย",
+            "เพิ่มความเร็วในการค้นหา",
+            "ลดขนาดข้อมูล",
+            "สร้าง backup"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "Schema type ใดใช้อ้างอิงถึง document อื่น?",
+          "options": [
+            "String",
+            "Number",
+            "ObjectId",
+            "Array"
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "q4-pre",
+      "courseId": 4,
+      "type": "pre",
+      "title": "แบบทดสอบก่อนเรียน (หน่วยที่ 4)",
+      "desc": "ทดสอบความรู้เรื่อง Authentication",
+      "questions": [
+        {
+          "id": 1,
+          "question": "JWT ย่อมาจากอะไร?",
+          "options": [
+            "Java Web Token",
+            "JSON Web Token",
+            "JavaScript Web Transfer",
+            "JSON Web Transfer"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "bcrypt ใช้สำหรับ?",
+          "options": [
+            "การเข้ารหัส URL",
+            "การ hash รหัสผ่าน",
+            "การสร้าง API key",
+            "การบีบอัดข้อมูล"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "Token มีกี่ส่วน?",
+          "options": [
+            "2 ส่วน",
+            "3 ส่วน",
+            "4 ส่วน",
+            "5 ส่วน"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "HTTPS ต่างจาก HTTP อย่างไร?",
+          "options": [
+            "เร็วกว่า",
+            "มีการเข้ารหัสข้อมูล (SSL/TLS)",
+            "รองรับ POST เท่านั้น",
+            "ทำงานบน port 3000"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "Status Code 401 หมายถึง?",
+          "options": [
+            "Not Found",
+            "Unauthorized",
+            "Bad Request",
+            "Server Error"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q4-post",
+      "courseId": 4,
+      "type": "post",
+      "title": "แบบทดสอบหลังเรียน (หน่วยที่ 4)",
+      "desc": "ทบทวนความรู้เรื่อง Authentication & Security",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Salt ใน bcrypt ทำหน้าที่อะไร?",
+          "options": [
+            "เข้ารหัส token",
+            "เพิ่มความสุ่มให้ hash ไม่ซ้ำกัน",
+            "บีบอัดข้อมูล",
+            "ตรวจสอบ email"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "jwt.sign() ใช้ทำอะไร?",
+          "options": [
+            "ตรวจสอบ token",
+            "สร้าง token ใหม่",
+            "ลบ token",
+            "ถอดรหัส token"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "RBAC ย่อมาจากอะไร?",
+          "options": [
+            "Role-Based Access Control",
+            "Remote Basic Auth Control",
+            "Request-Based API Control",
+            "Real-time Browser Auth Check"
+          ],
+          "correct": 0
+        },
+        {
+          "id": 4,
+          "question": "Helmet ใน Express ใช้เพื่อ?",
+          "options": [
+            "จัดการ routing",
+            "ตั้งค่า HTTP security headers",
+            "เชื่อมต่อ database",
+            "จัดการ logging"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "Rate Limiting ป้องกันอะไร?",
+          "options": [
+            "SQL Injection",
+            "DDoS / Brute force attacks",
+            "XSS",
+            "CSRF"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q5-pre",
+      "courseId": 5,
+      "type": "pre",
+      "title": "แบบทดสอบก่อนเรียน (หน่วยที่ 5)",
+      "desc": "ทดสอบความรู้เรื่อง Docker",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Docker ใช้สำหรับ?",
+          "options": [
+            "ออกแบบ UI",
+            "สร้างและจัดการ Containers",
+            "เขียน CSS",
+            "สร้าง Database"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "Container ต่างจาก Virtual Machine อย่างไร?",
+          "options": [
+            "Container หนักกว่า",
+            "Container เบาและเร็วกว่า แชร์ OS Kernel",
+            "Container ต้องมี OS แยก",
+            "ไม่มีความแตกต่าง"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "Dockerfile ใช้สำหรับ?",
+          "options": [
+            "รัน container",
+            "กำหนดขั้นตอนการสร้าง Image",
+            "จัดการ network",
+            "ดู logs"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "Docker Hub คืออะไร?",
+          "options": [
+            "IDE สำหรับ Docker",
+            "Registry สำหรับเก็บ Docker Images",
+            "Monitoring tool",
+            "CI/CD tool"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "คำสั่งใดใช้ build Docker image?",
+          "options": [
+            "docker run",
+            "docker build",
+            "docker create",
+            "docker start"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q5-post",
+      "courseId": 5,
+      "type": "post",
+      "title": "แบบทดสอบหลังเรียน (หน่วยที่ 5)",
+      "desc": "ทบทวนความรู้เรื่อง Docker & Containerization",
+      "questions": [
+        {
+          "id": 1,
+          "question": "WORKDIR ใน Dockerfile ทำหน้าที่อะไร?",
+          "options": [
+            "กำหนด port",
+            "กำหนด working directory ภายใน container",
+            "ติดตั้ง package",
+            "คัดลอกไฟล์"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": ".dockerignore ใช้ทำอะไร?",
+          "options": [
+            "ลบ container",
+            "ระบุไฟล์ที่ไม่ต้องคัดลอกเข้า image",
+            "สร้าง network",
+            "กำหนด environment"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "docker compose up -d ทำอะไร?",
+          "options": [
+            "ลบ containers",
+            "รัน services ในพื้นหลัง (detached)",
+            "หยุด services",
+            "แสดง logs"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "Multi-stage build มีประโยชน์อย่างไร?",
+          "options": [
+            "เพิ่มความเร็วในการรัน",
+            "ลดขนาด image สุดท้าย",
+            "เพิ่ม security",
+            "ง่ายต่อการ debug"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "volumes ใน Docker Compose ใช้เพื่อ?",
+          "options": [
+            "จัดการ network",
+            "เก็บข้อมูลถาวร (persistent data)",
+            "กำหนด port",
+            "ตั้งค่า environment"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q6-pre",
+      "courseId": 6,
+      "type": "pre",
+      "title": "แบบทดสอบก่อนเรียน (หน่วยที่ 6)",
+      "desc": "ทดสอบความรู้เรื่อง Cloud & AWS",
+      "questions": [
+        {
+          "id": 1,
+          "question": "AWS ย่อมาจากอะไร?",
+          "options": [
+            "Advanced Web Services",
+            "Amazon Web Services",
+            "Automated Web Systems",
+            "Amazon Web Solutions"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "EC2 ใน AWS คืออะไร?",
+          "options": [
+            "Database Service",
+            "Storage Service",
+            "Virtual Server",
+            "DNS Service"
+          ],
+          "correct": 2
+        },
+        {
+          "id": 3,
+          "question": "S3 ใช้สำหรับ?",
+          "options": [
+            "รัน Server",
+            "เก็บไฟล์ (Object Storage)",
+            "จัดการ Domain",
+            "ส่ง Email"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "CI/CD ย่อมาจากอะไร?",
+          "options": [
+            "Code Integration / Code Delivery",
+            "Continuous Integration / Continuous Deployment",
+            "Cloud Infrastructure / Cloud Delivery",
+            "Container Integration / Container Deploy"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "Serverless หมายถึง?",
+          "options": [
+            "ไม่มี server จริงๆ",
+            "ไม่ต้องจัดการ server เอง",
+            "ใช้ได้เฉพาะ frontend",
+            "ไม่มี database"
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "q6-post",
+      "courseId": 6,
+      "type": "post",
+      "title": "แบบทดสอบหลังเรียน (หน่วยที่ 6)",
+      "desc": "ทบทวนความรู้เรื่อง Cloud Deployment",
+      "questions": [
+        {
+          "id": 1,
+          "question": "PM2 ใช้สำหรับ?",
+          "options": [
+            "สร้าง Docker image",
+            "จัดการ Node.js process ให้ทำงานต่อเนื่อง",
+            "ตั้งค่า firewall",
+            "สร้าง database"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 2,
+          "question": "Nginx ในบริบทนี้ทำหน้าที่เป็น?",
+          "options": [
+            "Database",
+            "Reverse Proxy",
+            "DNS Server",
+            "File Server"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 3,
+          "question": "Let's Encrypt ให้บริการอะไร?",
+          "options": [
+            "Hosting ฟรี",
+            "SSL/TLS Certificate ฟรี",
+            "Domain ฟรี",
+            "Database ฟรี"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 4,
+          "question": "GitHub Actions คืออะไร?",
+          "options": [
+            "Issue Tracker",
+            "CI/CD Platform",
+            "Code Editor",
+            "Project Management"
+          ],
+          "correct": 1
+        },
+        {
+          "id": 5,
+          "question": "ECR ใน AWS ใช้สำหรับ?",
+          "options": [
+            "เก็บ Docker Images (Container Registry)",
+            "Compute Service",
+            "Email Service",
+            "DNS Service"
+          ],
+          "correct": 0
         }
       ]
     }

@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
-import { findFallbackQuiz } from '@/lib/fallback-content';
+import { withFallbackQuiz } from '@/lib/fallback-content';
 
 export default function QuizTakePage({ params }) {
   const { id } = use(params);
@@ -16,8 +16,8 @@ export default function QuizTakePage({ params }) {
     setUser(JSON.parse(localStorage.getItem('bm_current_user') || 'null'));
     fetch(`/api/quizzes/${id}`)
       .then((response) => response.ok ? response.json() : null)
-      .then((data) => setQuiz(data || findFallbackQuiz(id)))
-      .catch(() => setQuiz(findFallbackQuiz(id)));
+      .then((data) => setQuiz(withFallbackQuiz(data, id)))
+      .catch(() => setQuiz(withFallbackQuiz(null, id)));
   }, [id]);
 
   function choose(questionId, optionIndex) {

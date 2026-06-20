@@ -5,6 +5,7 @@ import Nav from '@/components/Nav';
 
 const emptyCourse = { unit: '', title: '', desc: '', icon: '📚', videoUrl: '', lessons: [] };
 const emptyQuiz = { id: '', courseId: '', type: 'pre', title: '', desc: '', questions: [] };
+const emptyUser = { name: '', username: '', password: '', role: 'user' };
 
 async function api(path, options) {
   const response = await fetch(path, {
@@ -18,8 +19,10 @@ async function api(path, options) {
 export default function AdminPage() {
   const [courses, setCourses] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+  const [users, setUsers] = useState([]);
   const [courseForm, setCourseForm] = useState(emptyCourse);
   const [quizForm, setQuizForm] = useState(emptyQuiz);
+  const [userForm, setUserForm] = useState(emptyUser);
   const [editingCourseId, setEditingCourseId] = useState(null);
   const [editingQuizId, setEditingQuizId] = useState(null);
   const [message, setMessage] = useState('');
@@ -28,12 +31,14 @@ export default function AdminPage() {
   async function load() {
     try {
       setLoadError('');
-      const [courseData, quizData] = await Promise.all([
+      const [courseData, quizData, userData] = await Promise.all([
         api('/api/courses'),
-        api('/api/quizzes')
+        api('/api/quizzes'),
+        api('/api/users')
       ]);
       setCourses(courseData);
       setQuizzes(quizData);
+      setUsers(userData);
     } catch {
       setLoadError('ไม่สามารถโหลดข้อมูล Admin ได้ เพราะ API backend ไม่ทำงาน ถ้าเปิดผ่าน GitHub Pages จะใช้ Admin แบบ Fullstack ไม่ได้ ต้อง deploy ไปยัง Vercel, Render, Railway หรือรันด้วย Docker');
     }
@@ -57,7 +62,7 @@ export default function AdminPage() {
   function addLesson() {
     setCourseForm((current) => ({
       ...current,
-      lessons: [...current.lessons, { id: `l-${Date.now()}`, title: '', content: '' }]
+      lessons: [...current.lessons, { id: `l-${Date.now()}`, title: '', videoUrl: '', content: '' }]
     }));
   }
 
@@ -159,6 +164,36 @@ export default function AdminPage() {
     await load();
   }
 
+  function updateUserField(field, value) {
+    setUserForm((current) => ({ ...current, [field]: value }));
+  }
+
+  async function saveUser(event) {
+    event.preventDefault();
+    await api('/api/users', { method: 'POST', body: JSON.stringify(userForm) });
+    setUserForm(emptyUser);
+    setMessage('เพิ่มผู้ใช้แล้ว');
+    await load();
+  }
+
+  async function deleteUser(id) {
+    await api(`/api/users/${id}`, { method: 'DELETE' });
+    setMessage('ลบผู้ใช้แล้ว');
+    await load();
+  }
+
+  async function toggleAdmin(user) {
+    await api(`/api/users/${user.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ ...user, role: user.role === 'admin' ? 'user' : 'admin' })
+    });
+    setMessage('อัปเดตสิทธิ์ผู้ใช้แล้ว');
+    await load();
+  }
+
+  const lessonTotal = courses.reduce((sum, course) => sum + (course.lessons?.length || 0), 0);
+  const questionTotal = quizzes.reduce((sum, quiz) => sum + (quiz.questions?.length || 0), 0);
+
   return (
     <main className="shell">
       <Nav />
@@ -167,6 +202,56 @@ export default function AdminPage() {
         <p className="muted">จัดการบทเรียน วิดีโอ และแบบทดสอบผ่าน Next.js API โดยออนไลน์จะบันทึกลง MongoDB และใช้ไฟล์ JSON เป็นสำรองตอนรันเครื่องตัวเอง</p>
         {loadError ? <p className="card" style={{ color: '#dc2626' }}>{loadError}</p> : null}
         {message ? <p className="btn secondary">{message}</p> : null}
+
+        <div className="grid" style={{ marginBottom: 24 }}>
+          <div className="card">
+            <h3>ผู้ใช้</h3>
+            <h2>{users.length}</h2>
+            <p className="muted">สมาชิกทั้งหมดในระบบ</p>
+          </div>
+          <div className="card">
+            <h3>บทเรียน</h3>
+            <h2>{courses.length} หน่วย / {lessonTotal} บทย่อย</h2>
+            <p className="muted">ข้อมูลจาก MongoDB หรือ JSON สำรอง</p>
+          </div>
+          <div className="card">
+            <h3>แบบทดสอบ</h3>
+            <h2>{quizzes.length} ชุด / {questionTotal} ข้อ</h2>
+            <p className="muted">ก่อนเรียนและหลังเรียน</p>
+          </div>
+        </div>
+
+        <div className="grid" style={{ alignItems: 'start', marginBottom: 24 }}>
+          <form className="card form" onSubmit={saveUser}>
+            <h2>เพิ่มผู้ใช้</h2>
+            <input className="input" placeholder="ชื่อที่แสดง" value={userForm.name} onChange={(e) => updateUserField('name', e.target.value)} required />
+            <input className="input" placeholder="Username" value={userForm.username} onChange={(e) => updateUserField('username', e.target.value)} required />
+            <input className="input" type="password" placeholder="Password" value={userForm.password} onChange={(e) => updateUserField('password', e.target.value)} required />
+            <select className="select" value={userForm.role} onChange={(e) => updateUserField('role', e.target.value)}>
+              <option value="user">ผู้เรียน</option>
+              <option value="admin">Admin</option>
+            </select>
+            <button className="btn" type="submit">เพิ่มผู้ใช้</button>
+          </form>
+
+          <div className="card">
+            <h2>จัดการผู้ใช้</h2>
+            <table className="table">
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name}<br /><span className="muted">@{user.username}</span></td>
+                    <td>{user.role}</td>
+                    <td className="row-actions">
+                      <button className="btn secondary" onClick={() => toggleAdmin(user)}>{user.role === 'admin' ? 'ลดเป็นผู้เรียน' : 'ตั้งเป็น Admin'}</button>
+                      <button className="btn danger" onClick={() => deleteUser(user.id)}>ลบ</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <div className="grid" style={{ alignItems: 'start' }}>
           <form className="card form" onSubmit={saveCourse}>
@@ -181,6 +266,7 @@ export default function AdminPage() {
             {courseForm.lessons.map((lesson, index) => (
               <div className="card form" key={lesson.id || index}>
                 <input className="input" placeholder="ชื่อบทเรียนย่อย" value={lesson.title} onChange={(e) => updateLesson(index, 'title', e.target.value)} />
+                <input className="input" placeholder="ลิงก์คลิปวิดีโอของบทนี้" value={lesson.videoUrl || ''} onChange={(e) => updateLesson(index, 'videoUrl', e.target.value)} />
                 <textarea className="textarea" placeholder="เนื้อหา" value={lesson.content} onChange={(e) => updateLesson(index, 'content', e.target.value)} />
                 <button className="btn danger" type="button" onClick={() => removeLesson(index)}>ลบบทเรียนย่อย</button>
               </div>
