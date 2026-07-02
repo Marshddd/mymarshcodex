@@ -1386,8 +1386,11 @@ function updateNav() {
   if (user) {
     navAuth.classList.add('hidden');
     navUser.classList.remove('hidden');
-    navAvatar.textContent = (user.firstname[0] + user.lastname[0]).toUpperCase();
-    dropdownName.textContent = `${user.firstname} ${user.lastname}`;
+    // Safe fallback: ป้องกัน crash เมื่อ firstname/lastname เป็น undefined หรือ empty
+    const fn = (user.firstname || user.name || user.username || '?')[0] || '?';
+    const ln = (user.lastname || '')[0] || '';
+    navAvatar.textContent = (fn + ln).toUpperCase();
+    dropdownName.textContent = `${user.firstname || user.name || user.username || ''} ${user.lastname || ''}`.trim();
     if (user.role === 'admin') adminLink.classList.remove('hidden');
     else adminLink.classList.add('hidden');
   } else {
@@ -1451,8 +1454,8 @@ async function handleRegister(e) {
     DB.users = [...DB.users.filter(u => u.id !== newUser.id && u.username !== newUser.username), newUser];
     DB.currentUser = newUser;
     updateNav();
-    showToast('สมัครสมาชิกและบันทึกบัญชีออนไลน์แล้ว', 'success');
-    navigate('home');
+    showToast('สมัครสมาชิกและบันทึกบัญชีออนไลน์แล้ว 🎉', 'success');
+    navigate('courses');
     document.getElementById('register-form').reset();
   } catch (error) {
     errEl.textContent = error.message || 'สมัครสมาชิกไม่สำเร็จ';
@@ -1504,8 +1507,10 @@ async function handleLogin(e) {
     DB.users = [...DB.users.filter(u => u.id !== user.id && u.username !== user.username), user];
     DB.currentUser = user;
     updateNav();
-    showToast(`ยินดีต้อนรับกลับมา, ${user.firstname}!`, 'success');
-    navigate('home');
+    // แสดงชื่อที่ปลอดภัย ป้องกัน undefined
+    const displayName = user.firstname || user.name || user.username || 'คุณ';
+    showToast(`ยินดีต้อนรับกลับมา, ${displayName}! 👋`, 'success');
+    navigate('courses');
     document.getElementById('login-form').reset();
   } catch (error) {
     errEl.textContent = error.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
