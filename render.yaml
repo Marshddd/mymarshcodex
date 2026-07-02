@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: backend-mastery
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB
+        value: backend_mastery
+    healthCheckPath: /api/health
