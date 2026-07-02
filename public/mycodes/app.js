@@ -1473,8 +1473,26 @@ async function handleLogin(e) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || 'Login failed');
+    let data = await response.json();
+    if (!response.ok) {
+      const localUser = DB.users.find(u => u.username === username && u.password === password && u.role !== 'admin');
+      if (!localUser) throw new Error(data.error || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+
+      const migrateResponse = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: localUser.username,
+          password,
+          firstname: localUser.firstname || localUser.name || username,
+          lastname: localUser.lastname || '',
+          email: localUser.email || '',
+          name: localUser.name || `${localUser.firstname || username} ${localUser.lastname || ''}`.trim()
+        })
+      });
+      data = await migrateResponse.json();
+      if (!migrateResponse.ok) throw new Error(data.error || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+    }
 
     const user = {
       ...data.user,
