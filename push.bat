@@ -6,7 +6,8 @@ git add .
 
 git diff --cached --quiet
 if %ERRORLEVEL% == 0 (
-  echo No changes to commit. Pushing anyway...
+  echo No file changes - creating empty commit to trigger Render deploy...
+  git commit --allow-empty -m "deploy: trigger redeploy"
 ) else (
   echo Changes found! Committing...
   git commit -m "update"
@@ -14,5 +15,6 @@ if %ERRORLEVEL% == 0 (
 
 git push
 echo.
-echo Done! Check https://mymarshcodex.onrender.com
+echo Done! Render is redeploying...
+echo Check: https://mymarshcodex.onrender.com
 pause
