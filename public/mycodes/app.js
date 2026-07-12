@@ -1240,7 +1240,7 @@ function getLastRoute() {
 function getInitialRouteFromHash() {
   const raw = window.location.hash.replace('#', '').trim();
   const [page = 'home', query = ''] = raw.split('?');
-  const allowedPages = ['home', 'courses', 'quiz-list', 'about', 'login', 'register', 'profile', 'my-courses', 'admin', 'lesson', 'quiz', 'certificate'];
+  const allowedPages = ['home', 'courses', 'quiz-list', 'about', 'login', 'register', 'profile', 'my-courses', 'admin', 'lesson', 'quiz', 'certificate', 'reset-password'];
   if (!raw) return { page: 'home', data: {} };
 
   const nextPage = allowedPages.includes(page) ? page : 'home';
@@ -1250,6 +1250,7 @@ function getInitialRouteFromHash() {
     page: nextPage,
     data: {
       courseId: params.get('courseId') || undefined,
+      token: params.get('token') || undefined,
       lessonId: params.get('lessonId') || undefined,
       quizId: params.get('quizId') || undefined
     }
@@ -1383,6 +1384,7 @@ function navigate(page, data) {
     if (data?.courseId) showCertificate(data.courseId);
     else navigate('my-courses');
   }
+  if (page === 'reset-password') renderResetPassword(data?.token);
   refreshContentForPage(page, data);
 }
 
@@ -1539,9 +1541,65 @@ function logout() {
 function showForgot() {
   showModal(`
     <h3>🔑 ลืมรหัสผ่าน</h3>
-    <p style="color:var(--text-muted);margin-bottom:20px;">กรุณาติดต่อผู้ดูแลระบบ: <strong>admin@backendmastery.com</strong></p>
-    <button class="btn-primary btn-full" onclick="closeModal()">ปิด</button>
+    <p style="color:var(--text-muted);margin-bottom:16px;">กรอกอีเมลที่ใช้สมัคร เราจะส่งลิงก์รีเซ็ตรหัสผ่านให้</p>
+    <input id="forgot-email" type="email" class="form-input" placeholder="อีเมลของคุณ" style="width:100%;margin-bottom:12px;" />
+    <button class="btn-primary btn-full" onclick="handleForgot()">ส่งลิงก์รีเซ็ต</button>
+    <div id="forgot-msg" style="margin-top:12px;text-align:center;"></div>
   `);
+}
+
+async function handleForgot() {
+  const email = document.getElementById('forgot-email')?.value?.trim();
+  const msg = document.getElementById('forgot-msg');
+  if (!email) { if (msg) msg.innerHTML = '<span style="color:#f85149">กรุณากรอกอีเมล</span>'; return; }
+  if (msg) msg.innerHTML = '<span style="color:var(--text-muted)">กำลังส่ง...</span>';
+  try {
+    const res = await fetch('/api/auth/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (msg) msg.innerHTML = `<span style="color:${res.ok ? '#7ee787' : '#f85149'}">${data.message || data.error}</span>`;
+  } catch { if (msg) msg.innerHTML = '<span style="color:#f85149">เกิดข้อผิดพลาด ลองใหม่</span>'; }
+}
+
+function renderResetPassword(token) {
+  const el = document.getElementById('reset-password-form');
+  if (!el) return;
+  if (!token) {
+    el.innerHTML = '<p style="color:#f85149;text-align:center;">ลิงก์ไม่ถูกต้อง กรุณาขอรีเซ็ตใหม่</p>';
+    return;
+  }
+  el.innerHTML = `
+    <input id="rp-pass" type="password" class="form-input" placeholder="รหัสผ่านใหม่ (อย่างน้อย 6 ตัว)" style="margin-bottom:10px;" />
+    <input id="rp-pass2" type="password" class="form-input" placeholder="ยืนยันรหัสผ่านใหม่" style="margin-bottom:14px;" />
+    <button class="btn-primary btn-full" onclick="handleResetPassword('${token}')">ตั้งรหัสผ่านใหม่</button>
+    <div id="rp-msg" style="margin-top:12px;text-align:center;"></div>
+  `;
+}
+
+async function handleResetPassword(token) {
+  const pass = document.getElementById('rp-pass')?.value;
+  const pass2 = document.getElementById('rp-pass2')?.value;
+  const msg = document.getElementById('rp-msg');
+  if (!pass || pass.length < 6) { if (msg) msg.innerHTML = '<span style="color:#f85149">รหัสผ่านต้องมีอย่างน้อย 6 ตัว</span>'; return; }
+  if (pass !== pass2) { if (msg) msg.innerHTML = '<span style="color:#f85149">รหัสผ่านไม่ตรงกัน</span>'; return; }
+  if (msg) msg.innerHTML = '<span style="color:var(--text-muted)">กำลังบันทึก...</span>';
+  try {
+    const res = await fetch('/api/auth/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, password: pass })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      if (msg) msg.innerHTML = '<span style="color:#7ee787">✅ เปลี่ยนรหัสผ่านสำเร็จ! กำลังไปหน้า Login...</span>';
+      setTimeout(() => navigate('login'), 2000);
+    } else {
+      if (msg) msg.innerHTML = `<span style="color:#f85149">${data.error}</span>`;
+    }
+  } catch { if (msg) msg.innerHTML = '<span style="color:#f85149">เกิดข้อผิดพลาด ลองใหม่</span>'; }
 }
 
 // ===== HOME =====
