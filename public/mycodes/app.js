@@ -1188,16 +1188,28 @@ function closeMobileMenu() {
 async function init() {
   loadCourseOverrides();
   loadQuizOverrides();
-  await loadServerContent();
   initDefaultData();
   initParticles();
   initTypingAnimation();
   updateNav();
   renderHomeCoursesPreview();
   renderFooterStats();
+
+  // Navigate FIRST so user can interact immediately (before any async work)
   const initialRoute = getInitialRouteFromHash();
   navigate(initialRoute.page, initialRoute.data);
+
   initScrollObserver();
+
+  // Load server content in background — does NOT force navigate when done
+  await loadServerContent();
+
+  // Refresh the page the user is currently on with fresh server data
+  const pg = currentPage;
+  if (pg === 'courses') renderCourses();
+  else if (pg === 'quiz-list') renderQuizList();
+  else if (pg === 'my-courses') renderMyCourses();
+  else renderHomeCoursesPreview();
 }
 
 function buildRouteHash(page, data = {}) {
@@ -2026,7 +2038,7 @@ function renderProfile() {
   const quizCount = Object.keys(results).length;
 
   document.getElementById('profile-card').innerHTML = `
-    <div class="profile-avatar">${(user.firstname[0] + user.lastname[0]).toUpperCase()}</div>
+    <div class="profile-avatar">${((user.firstname || user.name || '?')[0] + (user.lastname || '')[0]).toUpperCase()}</div>
     <div class="profile-name">${user.firstname} ${user.lastname}</div>
     <div class="profile-role">${user.role === 'admin' ? '⚙️ Admin' : '👤 ผู้ใช้งาน'}</div>
     <div class="profile-stats">
