@@ -21,10 +21,10 @@
           <span class="logo-text">Backend <span class="logo-accent">Mastery</span></span>
         </div>
         <div class="nav-links" id="nav-links">
-          <a href="#" onclick="navigate('home')" class="nav-link" id="nav-home">หน้าหลัก</a>
-          <a href="#" onclick="navigate('courses')" class="nav-link" id="nav-courses">บทเรียน</a>
-          <a href="#" onclick="navigate('quiz-list')" class="nav-link" id="nav-quiz">แบบทดสอบ</a>
-          <a href="#" onclick="navigate('about')" class="nav-link" id="nav-about">เกี่ยวกับ</a>
+          <a href="javascript:void(0)" onclick="navigate('home')" class="nav-link" id="nav-home">หน้าหลัก</a>
+          <a href="javascript:void(0)" onclick="navigate('courses')" class="nav-link" id="nav-courses">บทเรียน</a>
+          <a href="javascript:void(0)" onclick="navigate('quiz-list')" class="nav-link" id="nav-quiz">แบบทดสอบ</a>
+          <a href="javascript:void(0)" onclick="navigate('about')" class="nav-link" id="nav-about">เกี่ยวกับ</a>
         </div>
         <div class="nav-auth" id="nav-auth">
           <button class="btn-ghost" onclick="navigate('login')">เข้าสู่ระบบ</button>
@@ -35,11 +35,11 @@
           <div class="user-dropdown" id="user-dropdown">
             <div class="dropdown-header" id="dropdown-name">ชื่อผู้ใช้</div>
             <hr class="dropdown-divider" />
-            <a href="#" onclick="navigate('profile')" class="dropdown-item">👤 โปรไฟล์</a>
-            <a href="#" onclick="navigate('my-courses')" class="dropdown-item">📚 บทเรียนของฉัน</a>
-            <a href="#" onclick="navigate('admin')" class="dropdown-item hidden" id="admin-link">⚙️ ผู้ดูแลระบบ</a>
+            <a href="javascript:void(0)" onclick="navigate('profile')" class="dropdown-item">👤 โปรไฟล์</a>
+            <a href="javascript:void(0)" onclick="navigate('my-courses')" class="dropdown-item">📚 บทเรียนของฉัน</a>
+            <a href="javascript:void(0)" onclick="navigate('admin')" class="dropdown-item hidden" id="admin-link">⚙️ ผู้ดูแลระบบ</a>
             <hr class="dropdown-divider" />
-            <a href="#" onclick="logout()" class="dropdown-item danger">🚪 ออกจากระบบ</a>
+            <a href="javascript:void(0)" onclick="logout()" class="dropdown-item danger">🚪 ออกจากระบบ</a>
           </div>
         </div>
         <!-- Mobile menu button -->
@@ -417,7 +417,7 @@ app.<span class="c-purple">listen</span>(3000, () => {
                 </div>
                 <div id="reg-error" class="form-error hidden"></div>
                 <button type="submit" class="btn-primary btn-full">สมัครสมาชิก →</button>
-                <p class="auth-switch">มีบัญชีอยู่แล้ว? <a href="#" onclick="navigate('login')">เข้าสู่ระบบ</a></p>
+                <p class="auth-switch">มีบัญชีอยู่แล้ว? <a href="javascript:void(0)" onclick="navigate('login')">เข้าสู่ระบบ</a></p>
               </form>
             </div>
           </div>
@@ -445,12 +445,12 @@ app.<span class="c-purple">listen</span>(3000, () => {
                   <div class="input-wrapper">
                     <span class="input-icon">🔒</span>
                     <input type="password" id="login-password" placeholder="••••••••" required />
-                    <a href="#" class="input-link" onclick="showForgot()">ลืมรหัสผ่าน?</a>
+                    <a href="javascript:void(0)" class="input-link" onclick="showForgot()">ลืมรหัสผ่าน?</a>
                   </div>
                 </div>
                 <div id="login-error" class="form-error hidden"></div>
                 <button type="submit" class="btn-primary btn-full">เข้าสู่ระบบ →</button>
-                <p class="auth-switch">ยังไม่มีบัญชี? <a href="#" onclick="navigate('register')">สมัครสมาชิก</a></p>
+                <p class="auth-switch">ยังไม่มีบัญชี? <a href="javascript:void(0)" onclick="navigate('register')">สมัครสมาชิก</a></p>
               </form>
             </div>
           </div>
@@ -514,10 +514,10 @@ app.<span class="c-purple">listen</span>(3000, () => {
           <aside class="admin-sidebar">
             <div class="admin-logo">⚙️ Admin Panel</div>
             <nav class="admin-nav">
-              <a href="#" class="admin-nav-link active" data-section="users" onclick="showAdminSection('users')">👥 จัดการผู้ใช้</a>
-              <a href="#" class="admin-nav-link" data-section="courses" onclick="showAdminSection('courses')">📚 จัดการบทเรียน</a>
-              <a href="#" class="admin-nav-link" data-section="quizzes" onclick="showAdminSection('quizzes')">📝 จัดการแบบทดสอบ</a>
-              <a href="#" class="admin-nav-link" data-section="stats" onclick="showAdminSection('stats')">📊 สถิติ</a>
+              <a href="javascript:void(0)" class="admin-nav-link active" data-section="users" onclick="showAdminSection('users')">👥 จัดการผู้ใช้</a>
+              <a href="javascript:void(0)" class="admin-nav-link" data-section="courses" onclick="showAdminSection('courses')">📚 จัดการบทเรียน</a>
+              <a href="javascript:void(0)" class="admin-nav-link" data-section="quizzes" onclick="showAdminSection('quizzes')">📝 จัดการแบบทดสอบ</a>
+              <a href="javascript:void(0)" class="admin-nav-link" data-section="stats" onclick="showAdminSection('stats')">📊 สถิติ</a>
             </nav>
           </aside>
           <div class="admin-content">
@@ -565,13 +565,13 @@ app.<span class="c-purple">listen</span>(3000, () => {
           <div class="footer-links-group">
             <div class="footer-col">
               <h4>บทเรียน</h4>
-              <a href="#" onclick="navigate('courses')">บทเรียนทั้งหมด</a>
-              <a href="#" onclick="navigate('quiz-list')">แบบทดสอบ</a>
+              <a href="javascript:void(0)" onclick="navigate('courses')">บทเรียนทั้งหมด</a>
+              <a href="javascript:void(0)" onclick="navigate('quiz-list')">แบบทดสอบ</a>
             </div>
             <div class="footer-col">
               <h4>เกี่ยวกับ</h4>
-              <a href="#" onclick="navigate('about')">เกี่ยวกับเรา</a>
-              <a href="#" onclick="navigate('register')">สมัครสมาชิก</a>
+              <a href="javascript:void(0)" onclick="navigate('about')">เกี่ยวกับเรา</a>
+              <a href="javascript:void(0)" onclick="navigate('register')">สมัครสมาชิก</a>
             </div>
           </div>
         </div>
