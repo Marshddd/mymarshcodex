@@ -147,6 +147,10 @@ input, textarea, select { font-family: 'Sarabun', sans-serif; }
   transition: var(--transition);
 }
 .nav-link:hover, .nav-link.active { color: var(--text); background: var(--bg-700); }
+.nav-link { display: inline-flex; align-items: center; gap: 6px; }
+.nav-icon { width: 15px; height: 15px; flex-shrink: 0; }
+.dropdown-item { display: flex; align-items: center; gap: 8px; }
+.course-banner img { display: block; object-fit: contain; }
 
 .nav-auth { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .nav-user { display: flex; align-items: center; margin-left: auto; position: relative; }
