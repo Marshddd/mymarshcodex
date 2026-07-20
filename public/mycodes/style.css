@@ -858,7 +858,7 @@ input, textarea, select { font-family: 'Sarabun', sans-serif; }
   padding: 32px;
   margin-bottom: 24px;
 }
-.quiz-question { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 24px; line-height: 1.6; }
+.quiz-question { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 24px; line-height: 1.6; }
 .quiz-options { display: flex; flex-direction: column; gap: 12px; }
 .quiz-option {
   background: var(--bg-700);
