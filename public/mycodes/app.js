@@ -1092,7 +1092,8 @@ function normalizeVideoUrl(url = '') {
 
 function loadCourseOverrides() {
   if (!DB.courses) return;
-  COURSES.splice(0, COURSES.length, ...DB.courses);
+  const uniqueCourses = Array.from(new Map(DB.courses.map(c => [c.id, c])).values());
+  COURSES.splice(0, COURSES.length, ...uniqueCourses);
 }
 
 async function loadServerContent() {
@@ -1105,7 +1106,8 @@ async function loadServerContent() {
     if (coursesResponse.ok) {
       const courses = await coursesResponse.json();
       if (Array.isArray(courses) && courses.length) {
-        COURSES.splice(0, COURSES.length, ...courses);
+        const uniqueCourses = Array.from(new Map(courses.map(c => [c.id, c])).values());
+        COURSES.splice(0, COURSES.length, ...uniqueCourses);
         DB.courses = COURSES;
       }
     }
@@ -1113,7 +1115,8 @@ async function loadServerContent() {
     if (quizzesResponse.ok) {
       const quizzes = await quizzesResponse.json();
       if (Array.isArray(quizzes) && quizzes.length) {
-        QUIZZES.splice(0, QUIZZES.length, ...quizzes);
+        const uniqueQuizzes = Array.from(new Map(quizzes.map(q => [q.id, q])).values());
+        QUIZZES.splice(0, QUIZZES.length, ...uniqueQuizzes);
         DB.quizzes = QUIZZES;
       }
     }
@@ -1153,7 +1156,8 @@ function saveCourses() {
 
 function loadQuizOverrides() {
   if (!DB.quizzes) return;
-  QUIZZES.splice(0, QUIZZES.length, ...DB.quizzes);
+  const uniqueQuizzes = Array.from(new Map(DB.quizzes.map(q => [q.id, q])).values());
+  QUIZZES.splice(0, QUIZZES.length, ...uniqueQuizzes);
 }
 
 function saveQuizzes() {
