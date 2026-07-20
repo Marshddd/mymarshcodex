@@ -25,7 +25,7 @@ const COURSES = [
     unit: 'หน่วยที่ 1',
     title: 'พื้นฐาน Back-End',
     desc: 'ทำความเข้าใจกับ Back-End คืออะไร การทำงานของ Server, Client และการสื่อสารผ่าน HTTP',
-    icon: '<img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="JavaScript" width="52" height="52" style="filter:drop-shadow(0 0 12px rgba(247,223,30,0.5))">',
+    icon: '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" width="52" height="52">',
     color: 'linear-gradient(135deg, #1a2a6c, #b21f1f)',
     lessons: [
       {
@@ -133,7 +133,7 @@ DELETE /users/:id      → ลบผู้ใช้</code></pre>
     unit: 'หน่วยที่ 2',
     title: 'Node.js และ Express',
     desc: 'ติดตั้งและสร้าง Web Server ด้วย Node.js พร้อมใช้งาน Express Framework สร้าง REST API',
-    icon: '<img src="https://cdn.simpleicons.org/nodedotjs/339933" alt="Node.js" width="52" height="52" style="filter:drop-shadow(0 0 14px rgba(51,153,51,0.6))">',
+    icon: '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" width="52" height="52">',
     color: 'linear-gradient(135deg, #0f3443, #34e89e)',
     lessons: [
       {
@@ -267,7 +267,7 @@ app.post('/users', (req, res) => {
     unit: 'หน่วยที่ 3',
     title: 'ฐานข้อมูลด้วย MongoDB',
     desc: 'เรียนรู้การใช้งาน MongoDB ทั้ง CRUD Operations, Schema Design และการเชื่อมต่อกับ Express',
-    icon: '<img src="https://cdn.simpleicons.org/mongodb/47A248" alt="MongoDB" width="52" height="52" style="filter:drop-shadow(0 0 14px rgba(71,162,72,0.6))">',
+    icon: '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" width="52" height="52">',
     color: 'linear-gradient(135deg, #1a472a, #52c234)',
     lessons: [
       {
@@ -403,7 +403,7 @@ productSchema.index({ name: 'text' });     // text search</code></pre>
     unit: 'หน่วยที่ 4',
     title: 'Authentication & JWT',
     desc: 'ระบบยืนยันตัวตนด้วย JWT Token, bcrypt, Session Management และการรักษาความปลอดภัย',
-    icon: '<img src="https://cdn.simpleicons.org/jsonwebtokens/FB015B" alt="JWT" width="52" height="52" style="filter:drop-shadow(0 0 14px rgba(251,1,91,0.5))">',
+    icon: '<img src="https://jwt.io/img/pic_logo.svg" alt="JWT" width="52" height="52">',
     color: 'linear-gradient(135deg, #2c1654, #7b5ef8)',
     lessons: [
       {
@@ -543,7 +543,7 @@ app.put('/posts/:id',
     unit: 'หน่วยที่ 5',
     title: 'Docker & Containerization',
     desc: 'เรียนรู้การใช้ Docker สร้าง Container, เขียน Dockerfile และจัดการ Services ด้วย Docker Compose',
-    icon: '<img src="https://cdn.simpleicons.org/docker/2496ED" alt="Docker" width="60" height="52" style="filter:drop-shadow(0 0 14px rgba(36,150,237,0.6))">',
+    icon: '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" width="52" height="52">',
     color: 'linear-gradient(135deg, #0d2137, #2196f3)',
     lessons: [
       {
@@ -713,7 +713,7 @@ docker compose up -d --build</code></pre>
     unit: 'หน่วยที่ 6',
     title: 'Cloud Deployment (AWS)',
     desc: 'เรียนรู้การ Deploy แอปพลิเคชันขึ้น AWS Cloud ด้วย EC2, S3, RDS และ CI/CD Pipeline',
-    icon: '<img src="https://cdn.simpleicons.org/amazonaws/FF9900" alt="AWS" width="64" height="40" style="filter:drop-shadow(0 0 14px rgba(255,153,0,0.5))">',
+    icon: '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" width="52" height="52">',
     color: 'linear-gradient(135deg, #1a1a2e, #e94560)',
     lessons: [
       {
