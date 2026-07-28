@@ -3354,25 +3354,24 @@ function generateCertificate() {
 
   const certHTML = `
     <div id="cert-render" class="cert-container">
+      <div class="cert-badge-wrapper">
+        <div class="cert-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15l-2 5-9-5 9-5 2 5z"/><path d="M12 15l2 5 9-5-9-5-2 5z"/></svg>
+          <div class="cert-badge-text">VERIFIED</div>
+        </div>
+      </div>
       <div class="cert-header">Certificate of Completion</div>
-      <div class="cert-subtitle">This is to proudly certify that</div>
+      <div class="cert-subtitle">This certifies that</div>
+      <div class="cert-name">${user.firstname} ${user.lastname}</div>
       <div class="cert-body">
-        <div class="cert-name">${user.firstname} ${user.lastname}</div>
-        <div>has successfully completed the comprehensive course</div>
+        has successfully completed the comprehensive program in 
         <div class="cert-course">Backend Mastery: The Complete Guide</div>
       </div>
       <div class="cert-footer">
         <div class="cert-signature-box">
           <div class="cert-signature">J. Doe</div>
-          <div class="cert-signature-line">Lead Instructor</div>
+          <div class="cert-signature-line">Lead Instructor, Backend Mastery</div>
         </div>
-        
-        <div class="cert-badge-wrapper">
-          <div class="cert-badge-ribbon left"></div>
-          <div class="cert-badge-ribbon right"></div>
-          <div class="cert-badge">PASSED</div>
-        </div>
-        
         <div class="cert-date-box">
           <div class="cert-date-text">${date}</div>
           <div class="cert-date-line">Date of Issue</div>
