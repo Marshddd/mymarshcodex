@@ -3355,18 +3355,28 @@ function generateCertificate() {
   const certHTML = `
     <div id="cert-render" class="cert-container">
       <div class="cert-header">Certificate of Completion</div>
-      <div class="cert-subtitle">This is to certify that</div>
+      <div class="cert-subtitle">This is to proudly certify that</div>
       <div class="cert-body">
         <div class="cert-name">${user.firstname} ${user.lastname}</div>
-        <div>has successfully completed the course</div>
+        <div>has successfully completed the comprehensive course</div>
         <div class="cert-course">Backend Mastery: The Complete Guide</div>
       </div>
       <div class="cert-footer">
-        <div>
-          <div class="cert-signature">Instructor, Backend Mastery</div>
-          <div class="cert-date">Date: ${date}</div>
+        <div class="cert-signature-box">
+          <div class="cert-signature">J. Doe</div>
+          <div class="cert-signature-line">Lead Instructor</div>
         </div>
-        <div class="cert-badge">PASSED</div>
+        
+        <div class="cert-badge-wrapper">
+          <div class="cert-badge-ribbon left"></div>
+          <div class="cert-badge-ribbon right"></div>
+          <div class="cert-badge">PASSED</div>
+        </div>
+        
+        <div class="cert-date-box">
+          <div class="cert-date-text">${date}</div>
+          <div class="cert-date-line">Date of Issue</div>
+        </div>
       </div>
     </div>
   `;
