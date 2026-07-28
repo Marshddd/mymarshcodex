@@ -172,41 +172,36 @@ app.listen(3000, () => {
         id: 'l2-2',
         title: 'Routing และ Middleware',
         content: `
-          <h3>🗺️ Express Routing</h3>
-          <p>Routing คือการกำหนดว่า Server จะตอบสนองอย่างไรเมื่อได้รับ request ที่ URL และ Method ต่างๆ</p>
-          <pre><code>// routes/users.js
-const router = require('express').Router();
+        content: `
+          <h3>🗺️ Express Routing & MVC</h3>
+          <p>ในการทำงานจริง เรามักจะจัดโครงสร้างแบบ MVC (Model-View-Controller) เพื่อให้โค้ดเป็นระเบียบ</p>
+          <pre><code class="language-javascript">// 📂 controllers/userController.js
+exports.getUsers = (req, res) => {
+  res.json({ users: [{ id: 1, name: 'Alice' }] });
+};
 
-router.get('/', (req, res) => {
-  res.json({ users: [] });
-});
-
-router.post('/', (req, res) => {
+exports.createUser = (req, res) => {
   const { name, email } = req.body;
-  res.status(201).json({ id: 1, name, email });
-});
+  res.status(201).json({ id: 2, name, email });
+};</code></pre>
+          <pre><code class="language-javascript">// 📂 routes/userRoutes.js
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
+
+router.get('/', userController.getUsers);
+router.post('/', userController.createUser);
 
 module.exports = router;</code></pre>
           <h3>🔧 Middleware</h3>
-          <p>Middleware คือฟังก์ชันที่ทำงานก่อน Request ถึง Route Handler</p>
-          <pre><code>// Logging middleware
+          <p>Middleware คือฟังก์ชันที่ทำงานคั่นกลางระหว่าง Request และ Controller</p>
+          <pre><code class="language-javascript">// Logging middleware
 const logger = (req, res, next) => {
-  console.log(\`\${req.method} \${req.path} - \${new Date()}\`);
-  next(); // ส่งต่อไปยัง middleware ถัดไป
+  console.log(\`[\${new Date().toISOString()}] \${req.method} \${req.path}\`);
+  next(); // ส่งต่อไปยัง middleware หรือ controller ถัดไป
 };
 
 app.use(logger);</code></pre>
-          <h3>🛡️ Auth Middleware</h3>
-          <pre><code>const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) {
-    return res.status(401).json({ error: 'No token' });
-  }
-  // ตรวจสอบ token
-  next();
-};
-
-app.use('/api/protected', authMiddleware);</code></pre>
         `
       },
       {
@@ -347,50 +342,30 @@ await User.deleteMany({ role: 'inactive' });</code></pre>
         content: `
           <h3>🏗️ การออกแบบ Schema ที่ดี</h3>
           <p>การออกแบบ Schema ที่ดีจะส่งผลต่อประสิทธิภาพและความยืดหยุ่นของระบบ</p>
-          <h3>📐 Schema Options</h3>
-          <pre><code>const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'กรุณาระบุชื่อสินค้า'],
-    trim: true,
-    maxlength: 100
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: [0, 'ราคาต้องมากกว่า 0']
-  },
-  category: {
-    type: String,
-    enum: ['electronics', 'clothing', 'food'],
-    default: 'electronics'
-  },
-  tags: [String],
-  inStock: { type: Boolean, default: true }
-}, {
-  timestamps: true // สร้าง createdAt, updatedAt อัตโนมัติ
-});</code></pre>
           <h3>🔗 Relations — Populate</h3>
-          <pre><code>// Order อ้างอิงถึง User
+          <pre><code class="language-javascript">// Order อ้างอิงถึง User
 const orderSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  products: [{
-    product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-    quantity: Number
-  }],
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   totalPrice: Number
 });
 
-// ดึงข้อมูลพร้อม populate
-const order = await Order.findById(id)
-  .populate('user', 'name email')
-  .populate('products.product', 'name price');</code></pre>
+// ดึงข้อมูลพร้อม populate เพื่อดึงชื่อผู้ใช้
+const order = await Order.findById(id).populate('user', 'name email');</code></pre>
+          <h3>📊 Aggregation Pipeline (ขั้นสูง)</h3>
+          <p>เมื่อต้องการประมวลผลข้อมูลซับซ้อน เช่น การหายอดขายรวมต่อเดือน</p>
+          <pre><code class="language-javascript">const salesReport = await Order.aggregate([
+  { $match: { status: 'completed' } },
+  { 
+    $group: {
+      _id: { $month: "$createdAt" },
+      totalRevenue: { $sum: "$totalPrice" },
+      count: { $sum: 1 }
+    }
+  },
+  { $sort: { _id: 1 } }
+]);</code></pre>
           <h3>📌 Indexing — เพิ่มความเร็ว</h3>
-          <pre><code>// สร้าง index
+          <pre><code class="language-javascript">// สร้าง index เพื่อค้นหาได้เร็วขึ้น
 userSchema.index({ email: 1 });           // single
 productSchema.index({ name: 1, price: -1 }); // compound
 productSchema.index({ name: 'text' });     // text search</code></pre>
@@ -1898,6 +1873,31 @@ function renderLessonContent() {
       `}
     </div>
   `;
+
+  // Prism Syntax Highlighting
+  if (window.Prism) {
+    Prism.highlightAllUnder(content);
+  }
+
+  // Add Copy Button to Code Blocks
+  const preElements = content.querySelectorAll('pre');
+  preElements.forEach(pre => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-btn';
+    copyBtn.innerText = 'Copy';
+    copyBtn.onclick = () => {
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        copyBtn.innerText = 'Copied!';
+        setTimeout(() => copyBtn.innerText = 'Copy', 2000);
+      });
+    };
+    wrapper.appendChild(copyBtn);
+  });
 }
 
 // ===== QUIZ =====
@@ -2154,6 +2154,15 @@ function renderProfile() {
         `;
       }).join('')}
     </div>
+    
+    ${checkCertificateEligibility(user.id) ? `
+    <div class="profile-section" style="background: rgba(212, 175, 55, 0.1); border: 1px solid #d4af37; text-align: center;">
+      <h3 style="color: #d4af37; margin-bottom: 10px;">🎉 ขอแสดงความยินดี!</h3>
+      <p style="font-size: 14px; margin-bottom: 16px;">คุณผ่านแบบทดสอบหลังเรียนครบทุกหน่วยแล้ว สามารถรับใบประกาศนียบัตรได้เลย</p>
+      <button class="btn-primary" style="background: #d4af37; color: #1a1a1a;" onclick="generateCertificate()">🎓 ดาวน์โหลดใบประกาศนียบัตร</button>
+    </div>
+    ` : ''}
+
     <div class="profile-section">
       <h3>ผลการทดสอบ</h3>
       ${Object.keys(results).length === 0 ? '<p style="color:var(--text-dim);font-size:14px;">ยังไม่ได้ทำแบบทดสอบ</p>' : 
@@ -3319,6 +3328,75 @@ window.addEventListener('scroll', () => {
   }
   lastScroll = st;
 }, { passive: true });
+
+// ===== CERTIFICATE SYSTEM =====
+function checkCertificateEligibility(userId) {
+  const results = DB.quizResults[userId] || {};
+  // Check if they passed all post-tests (q1-post to q6-post)
+  const requiredQuizzes = ['q1-post', 'q2-post', 'q3-post', 'q4-post', 'q5-post', 'q6-post'];
+  
+  for (const qid of requiredQuizzes) {
+    if (!results[qid]) return false;
+    const { score, total } = results[qid];
+    if (score / total < 0.6) return false;
+  }
+  return true;
+}
+
+function generateCertificate() {
+  const user = DB.currentUser;
+  if (!user) return;
+
+  const date = new Date().toLocaleDateString('th-TH', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  const certHTML = `
+    <div id="cert-render" class="cert-container">
+      <div class="cert-header">Certificate of Completion</div>
+      <div class="cert-subtitle">This is to certify that</div>
+      <div class="cert-body">
+        <div class="cert-name">${user.firstname} ${user.lastname}</div>
+        <div>has successfully completed the course</div>
+        <div class="cert-course">Backend Mastery: The Complete Guide</div>
+      </div>
+      <div class="cert-footer">
+        <div>
+          <div class="cert-signature">Instructor, Backend Mastery</div>
+          <div class="cert-date">Date: ${date}</div>
+        </div>
+        <div class="cert-badge">PASSED</div>
+      </div>
+    </div>
+  `;
+
+  const hiddenDiv = document.createElement('div');
+  hiddenDiv.className = 'hidden-render';
+  hiddenDiv.innerHTML = certHTML;
+  document.body.appendChild(hiddenDiv);
+
+  const certElement = document.getElementById('cert-render');
+
+  if (window.html2canvas) {
+    showToast('กำลังสร้างใบประกาศนียบัตร...', 'info');
+    html2canvas(certElement, { scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `Certificate_${user.firstname}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      document.body.removeChild(hiddenDiv);
+      showToast('ดาวน์โหลดใบประกาศนียบัตรสำเร็จ!', 'success');
+      launchConfetti();
+    }).catch(err => {
+      console.error(err);
+      document.body.removeChild(hiddenDiv);
+      showToast('เกิดข้อผิดพลาดในการสร้างใบประกาศฯ', 'error');
+    });
+  } else {
+    document.body.removeChild(hiddenDiv);
+    showToast('ระบบกำลังเตรียมพร้อม กรุณาลองใหม่', 'error');
+  }
+}
 
 // ===== START =====
 window.addEventListener('DOMContentLoaded', init);
