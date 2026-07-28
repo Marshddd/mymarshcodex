@@ -3074,3 +3074,143 @@ textarea::placeholder {
   left: -9999px;
   z-index: -100;
 }
+
+/* ===== CODE PLAYGROUND ===== */
+.playground-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 80px;
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  color: #1a1a2e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(52, 232, 158, 0.4);
+  transition: all 0.3s ease;
+  z-index: 99;
+}
+.playground-fab:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(52, 232, 158, 0.6);
+}
+
+.playground-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+.playground-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.playground-panel {
+  width: 90%;
+  max-width: 800px;
+  background: #0d1021;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transform: scale(1) translateY(0);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.playground-overlay.hidden .playground-panel {
+  transform: scale(0.9) translateY(20px);
+}
+
+.playground-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #151a30;
+  border-bottom: 1px solid var(--border);
+}
+.playground-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'Fira Code', monospace;
+}
+.playground-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+.playground-close:hover {
+  color: var(--red);
+}
+
+.playground-body {
+  padding: 0;
+  border-bottom: 1px solid var(--border);
+}
+#playground-input {
+  width: 100%;
+  height: 200px;
+  background: #080b12;
+  color: #fff;
+  border: none;
+  padding: 20px;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+}
+#playground-input::placeholder {
+  color: #333;
+}
+
+.playground-actions {
+  display: flex;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #0d1021;
+  border-bottom: 1px solid var(--border);
+}
+
+.playground-terminal {
+  background: #000;
+  padding: 16px 20px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.terminal-header {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.terminal-output {
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #a9b7c6;
+  white-space: pre-wrap;
+}

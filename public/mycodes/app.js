@@ -3408,5 +3408,70 @@ function generateCertificate() {
   }
 }
 
+// ===== CODE PLAYGROUND =====
+function togglePlayground() {
+  const modal = document.getElementById('playground-modal');
+  if (modal) {
+    modal.classList.toggle('hidden');
+  }
+}
+
+function clearPlayground() {
+  document.getElementById('playground-input').value = '';
+  document.getElementById('playground-output').innerHTML = '<span style="color:var(--text-dim)">[Ready to execute...]</span>';
+}
+
+function runPlaygroundCode() {
+  const code = document.getElementById('playground-input').value;
+  const outputEl = document.getElementById('playground-output');
+  outputEl.innerHTML = '';
+  
+  if (!code.trim()) {
+    outputEl.innerHTML = '<span style="color:var(--text-dim)">[No code provided]</span>';
+    return;
+  }
+
+  // Backup original console methods
+  const originalLog = console.log;
+  const originalError = console.error;
+  const originalWarn = console.warn;
+  
+  let outputText = '';
+  
+  // Custom console stringifier to handle objects beautifully
+  const stringifyArgs = (args) => {
+    return args.map(arg => {
+      if (typeof arg === 'object') {
+        try { return JSON.stringify(arg, null, 2); } 
+        catch (e) { return String(arg); }
+      }
+      return String(arg);
+    }).join(' ');
+  };
+
+  console.log = (...args) => { outputText += stringifyArgs(args) + '\n'; };
+  console.error = (...args) => { outputText += '<span style="color:var(--red)">' + stringifyArgs(args) + '</span>\n'; };
+  console.warn = (...args) => { outputText += '<span style="color:var(--yellow)">' + stringifyArgs(args) + '</span>\n'; };
+
+  try {
+    // Run the code
+    const execute = new Function(code);
+    execute();
+    
+    if (outputText === '') {
+      outputEl.innerHTML = '<span style="color:var(--green)">[Code executed successfully with no output]</span>';
+    } else {
+      outputEl.innerHTML = outputText;
+    }
+  } catch (err) {
+    outputEl.innerHTML = '<span style="color:var(--red)">Error: ' + err.message + '</span>';
+  }
+
+  // Restore console methods
+  console.log = originalLog;
+  console.error = originalError;
+  console.warn = originalWarn;
+}
+
 // ===== START =====
 window.addEventListener('DOMContentLoaded', init);
