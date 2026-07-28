@@ -172,7 +172,6 @@ app.listen(3000, () => {
         id: 'l2-2',
         title: 'Routing และ Middleware',
         content: `
-        content: `
           <h3>🗺️ Express Routing & MVC</h3>
           <p>ในการทำงานจริง เรามักจะจัดโครงสร้างแบบ MVC (Model-View-Controller) เพื่อให้โค้ดเป็นระเบียบ</p>
           <pre><code class="language-javascript">// 📂 controllers/userController.js
