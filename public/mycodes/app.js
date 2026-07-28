@@ -2154,13 +2154,15 @@ function renderProfile() {
       }).join('')}
     </div>
     
-    ${checkCertificateEligibility(user.id) ? `
-    <div class="profile-section" style="background: rgba(212, 175, 55, 0.1); border: 1px solid #d4af37; text-align: center;">
-      <h3 style="color: #d4af37; margin-bottom: 10px;">🎉 ขอแสดงความยินดี!</h3>
-      <p style="font-size: 14px; margin-bottom: 16px;">คุณผ่านแบบทดสอบหลังเรียนครบทุกหน่วยแล้ว สามารถรับใบประกาศนียบัตรได้เลย</p>
-      <button class="btn-primary" style="background: #d4af37; color: #1a1a1a;" onclick="generateCertificate()">🎓 ดาวน์โหลดใบประกาศนียบัตร</button>
+    <div class="profile-section" style="background: ${checkCertificateEligibility(user.id) ? 'rgba(212, 175, 55, 0.1)' : 'var(--bg-light)'}; border: 1px solid ${checkCertificateEligibility(user.id) ? '#d4af37' : 'var(--border)'}; text-align: center;">
+      <h3 style="color: ${checkCertificateEligibility(user.id) ? '#d4af37' : 'var(--text)'}; margin-bottom: 10px;">🎓 ใบประกาศนียบัตร (Certificate)</h3>
+      ${checkCertificateEligibility(user.id) ? `
+        <p style="font-size: 14px; margin-bottom: 16px;">🎉 ขอแสดงความยินดี! คุณผ่านแบบทดสอบหลังเรียนครบทุกหน่วยแล้ว</p>
+        <button class="btn-primary" style="background: #d4af37; color: #1a1a1a;" onclick="generateCertificate()">ดาวน์โหลดใบประกาศนียบัตร</button>
+      ` : `
+        <p style="font-size: 14px; color: var(--text-dim); margin-bottom: 0;">เงื่อนไข: ต้องสอบผ่านแบบทดสอบหลังเรียน (Post-test) ทั้ง 6 หน่วย (คะแนน 60% ขึ้นไป)</p>
+      `}
     </div>
-    ` : ''}
 
     <div class="profile-section">
       <h3>ผลการทดสอบ</h3>
