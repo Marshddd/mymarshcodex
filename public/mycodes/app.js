@@ -1763,13 +1763,14 @@ function getLessonVideoEmbed(url) {
   if (!url) return '';
   try {
     const parsed = new URL(url);
+    const ytParams = '?rel=0&modestbranding=1&iv_load_policy=3&color=white&playsinline=1';
     if (parsed.hostname.includes('youtube.com')) {
       const id = parsed.searchParams.get('v') || parsed.pathname.split('/').filter(Boolean).pop();
-      return id ? `https://www.youtube.com/embed/${id}` : '';
+      return id ? `https://www.youtube.com/embed/${id}${ytParams}` : '';
     }
     if (parsed.hostname.includes('youtu.be')) {
       const id = parsed.pathname.split('/').filter(Boolean)[0];
-      return id ? `https://www.youtube.com/embed/${id}` : '';
+      return id ? `https://www.youtube.com/embed/${id}${ytParams}` : '';
     }
     return url;
   } catch {
